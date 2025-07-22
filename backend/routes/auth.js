@@ -7,8 +7,8 @@ const router = express.Router(); // creating a router object from express to def
 // validationResult is used to check the result of those validations
 const { body, validationResult } = require('express-validator');
 
-// creating a new User using method POST, URL "/api/auth/" with validation
-router.post('/', [
+// creating a new User using method POST, URL "/api/auth/createuser" with validation
+router.post('/createuser', [
   body('name', 'Enter a valid name').isLength({ min: 3 }),
   body('email', 'Enter a valid email').isEmail(),
   body('password', 'Password must be at least 5 characters').isLength({ min: 5 })
@@ -22,21 +22,22 @@ router.post('/', [
   }
 
   try {
-    // if validation passed, create a new user with the request data
-    const user = await User.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password
-    });
+    // checking if a user with same email already exists
+    const user_exists = await User.findOne({email: req.body.email});
 
-    // responding with the created user (in JSON format)
-    res.json(user);
-  } catch (err) {
-    // handling the case where the email already exists (duplicate key error)
-    if (err.code === 11000) {
+    if (user_exists){// if user exists then no new user is created
       return res.status(400).json({ error: 'Email already exists' });
+    }else{
+      // if validation passed and user does not exists already then create a new user with the request data
+      const user = await User.create({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+      });    
+      // responding with the created user (in JSON format)
+      res.json(user);  
     }
-
+  } catch (err) {
     // logging other errors to console and returning 500 Internal Server Error
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
