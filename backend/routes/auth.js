@@ -7,6 +7,10 @@ const router = express.Router(); // creating a router object from express to def
 // validationResult is used to check the result of those validations
 const { body, validationResult } = require('express-validator');
 
+const bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
+const jwt_secret = "aginomoto$2025";
+
 // creating a new User using method POST, URL "/api/auth/createuser" with validation
 router.post('/createuser', [
   body('name', 'Enter a valid name').isLength({ min: 3 }),
@@ -27,16 +31,30 @@ router.post('/createuser', [
 
     if (user_exists){// if user exists then no new user is created
       return res.status(400).json({ error: 'Email already exists' });
-    }else{
-      // if validation passed and user does not exists already then create a new user with the request data
-      const user = await User.create({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
-      });    
-      // responding with the created user (in JSON format)
-      res.json(user);  
     }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+    // if validation passed and user does not exists already then create a new user with the request data
+    const user = await User.create({
+      name: req.body.name,
+      email: req.body.email,
+      password: hashedPassword
+    });    
+    // responding with the created user (in JSON format)
+    // res.json(user);  
+
+    const data = {
+      user:{
+        id: user.id
+      }
+    }
+    const authtoken = jwt.sign(data, jwt_secret);
+
+    // responding with authentication token (in JSON format)
+    res.json({authtoken})
+
   } catch (err) {
     // logging other errors to console and returning 500 Internal Server Error
     console.error(err);
