@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const mongoURI = "mongodb://localhost:27017/eterna-note";
+const mongoose = require("mongoose"); // importing library to work with mongoDB inside node.js
+const mongoURI = "mongodb://localhost:27017/eterna-note"; // connection string that tells mongoose exactly how to find and connect to database
 
 const connectToMongo = async () => {
   try {
@@ -11,4 +11,4 @@ const connectToMongo = async () => {
   }
 };
 
-module.exports = connectToMongo;
+module.exports = connectToMongo; // this makes the connectToMongo() function available to other files using require()
