@@ -11,8 +11,8 @@ const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 const jwt_secret = "aginomoto$2025";
 
-// creating a new User using method POST, URL "/api/auth/createuser" with validation
-router.post('/createuser', [
+// sign up using POST method, URL "/api/auth/signup" with validation
+router.post('/signup', [
   body('name', 'Enter a valid name').isLength({ min: 3 }),
   body('email', 'Enter a valid email').isEmail(),
   body('password', 'Password must be at least 5 characters').isLength({ min: 5 })
@@ -41,13 +41,59 @@ router.post('/createuser', [
       name: req.body.name,
       email: req.body.email,
       password: hashedPassword
-    });    
-    // responding with the created user (in JSON format)
-    // res.json(user);  
+    }); 
 
     const data = {
       user:{
         id: user.id
+      }
+    }
+    const authtoken = jwt.sign(data, jwt_secret);
+
+    // responding with authentication token (in JSON format)
+    res.json({authtoken})
+
+  } catch (err) {
+    // logging other errors to console and returning 500 Internal Server Error
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// log in using POST method, URL "/api/auth/login" with validation
+router.post('/login', [
+  body('email', 'Enter a valid email').isEmail(),
+  body('password', 'Password must not be empty').exists()
+], async (req, res) => {
+  // checking if the request passed all validation rules
+  const errors = validationResult(req);
+
+   // if validation failed, return 400 Bad Request with the error messages
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+
+  const {email, password} = req.body;
+  
+  try {
+
+    // checking if the user exists
+    const user_exists = await User.findOne({email});
+
+    if (!user_exists){
+      return res.status(400).json({ error: 'Enter valid credentials' });
+    }
+
+    // checking is the password is correct
+    const password_matched = await bcrypt.compare(password, user_exists.password);
+
+    if (!password_matched){
+      return res.status(400).json({ error: 'Enter valid credentials' });
+    }
+
+    const data = {
+      user:{
+        id: user_exists.id
       }
     }
     const authtoken = jwt.sign(data, jwt_secret);
