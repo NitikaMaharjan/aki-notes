@@ -1,7 +1,7 @@
 {
-  "name": "eterna-note-backend",
+  "name": "aki-notes-backend",
   "version": "1.0.0",
-  "description": "EternaNote - Productivity App",
+  "description": "AkiNotes - Productivity App",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

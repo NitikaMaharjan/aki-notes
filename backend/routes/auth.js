@@ -11,7 +11,10 @@ const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
 const jwt_secret = "aginomoto$2025";
 
-// sign up using POST method, URL "/api/auth/signup" with validation
+// importing fetchUserDetails middleware
+var fetchUserDetails = require('../middleware/fetchUserDetails');
+
+// Route 1: sign up using POST method, URL "/api/auth/signup" with validation
 router.post('/signup', [
   body('name', 'Enter a valid name').isLength({ min: 3 }),
   body('email', 'Enter a valid email').isEmail(),
@@ -60,7 +63,7 @@ router.post('/signup', [
   }
 });
 
-// log in using POST method, URL "/api/auth/login" with validation
+// Route 2: log in using POST method, URL "/api/auth/login" with validation
 router.post('/login', [
   body('email', 'Enter a valid email').isEmail(),
   body('password', 'Password must not be empty').exists()
@@ -108,5 +111,23 @@ router.post('/login', [
   }
 });
 
+// Route 3: fetching logged in user details using POST method, URL "/api/auth/fetchuserdetails" after logging in
+// fetchUserDetails is a middleware which verifies the authtoken, extracts user details
+router.post("/fetchuserdetails", fetchUserDetails, async (req, res) => {
+  try {
+    user_id = req.user.id;
+    // fetching user details using user_id
+    const user = await User.findById(user_id).select("-password");
+    res.send(user);
+  } catch (err) {
+    // logging other errors to console and returning 500 Internal Server Error
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 //exporting router so it can be used in index.js
 module.exports = router;
+
+// Note
+// each authtoken is unique per signup/login, even for the same user.
