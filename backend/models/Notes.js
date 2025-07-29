@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
 const NotesSchema = new Schema({
+    user:{
+        type: mongoose.Schema.Types.ObjectId, // sets the data type as a MongoDB object ID
+        ref: 'user' // tells Mongoose to reference the user collection - a way to link notes to users
+    },
     title:{
         type: String,
         required: true
@@ -15,8 +20,10 @@ const NotesSchema = new Schema({
     },
     date:{
         type: Date,
-        required: Date.now
+        default: Date.now,
+        required: true
     }
 });
 
-module.exports = mongoose.model("notes", NotesSchema);
+const Notes = mongoose.model("notes", NotesSchema);
+module.exports = Notes;

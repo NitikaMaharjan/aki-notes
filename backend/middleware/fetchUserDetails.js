@@ -6,7 +6,7 @@ const fetchUserDetails = (req, res, next) => {
     // extracting token from the request header named 'authtoken'
     const token = req.header('authtoken');
     if (!token) {
-        res.status(401).send({ error: "Please provide a valid token" });
+        return res.status(401).send({ error: "Please provide a valid token" });
     }
     try {
         // verifying the token

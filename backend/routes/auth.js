@@ -115,7 +115,7 @@ router.post('/login', [
 // fetchUserDetails is a middleware which verifies the authtoken, extracts user details
 router.post("/fetchuserdetails", fetchUserDetails, async (req, res) => {
   try {
-    user_id = req.user.id;
+    const user_id = req.user.id;
     // fetching user details using user_id
     const user = await User.findById(user_id).select("-password");
     res.send(user);
