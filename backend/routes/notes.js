@@ -35,7 +35,26 @@ router.post(
         tag: tag || "General"
       });
 
-      res.json({ new_note });
+      res.json(new_note);
+    } catch (err) {
+      // logging other errors to console and returning 500 Internal Server Error
+      console.error(err);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
+  }
+);
+
+// Route 2: fetching notes of logged in user using GET method, URL "/api/notes/getnote"
+router.get(
+  "/getnote",
+  fetchUserDetails,
+  async (req, res) => {
+
+    const user_id = req.user.id;    
+
+    try {
+      const notes = await Notes.find({user: user_id});
+      res.json(notes);
     } catch (err) {
       // logging other errors to console and returning 500 Internal Server Error
       console.error(err);
