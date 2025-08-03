@@ -13,6 +13,8 @@ export default function Home() {
   }, [])
   
   return (
-    <div className="content">hi this is {valueFromNoteContext.userInfo.name} {valueFromNoteContext.userInfo.age} years old.</div>
+    <div className="content">
+      hi this is {valueFromNoteContext.userInfo.name} {valueFromNoteContext.userInfo.age} years old.
+    </div>
   )
 }

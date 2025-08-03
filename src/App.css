@@ -1,10 +1,32 @@
+.top-navbar{
+    display: "flex";
+    width: 80%;
+    position: fixed;
+    margin: 24px 24px 24px 274px;
+}
+
 .side-navbar{
     display: "flex";
     flex-direction: column;
     height:100%;
-    width: 240px;
+    width: 250px;
     position: fixed;
-    padding: 24px;
+}
+
+.navbar-link-div{
+    margin: 0px 0px 6px 0px;
+    padding: 4px 6px 4px 12px;
+}
+
+.navbar-link-div:hover{
+    transform: scale(1.02);
+}
+
+.navbar-link-div-active{
+    margin: 0px 0px 6px 0px;
+    padding: 4px 6px 4px 8px;
+    border-left: 4px solid black;
+    background-color: rgba(260, 200, 200, 0.500);
 }
 
 .navbar-link{
@@ -12,7 +34,12 @@
     text-decoration: none;
 }
 
+.navbar-link-active{
+    color: black;
+    text-decoration: none;
+}
+
 .content{
-    margin-top: 0px;
-    margin-left: 240px;
+    margin-top: 124px;
+    margin-left: 250px;
 }
