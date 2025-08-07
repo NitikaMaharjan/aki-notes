@@ -8,9 +8,9 @@ export default function Navbar() {
   }, [location]);
   
   return (
-    <div style={{margin: "24px", padding: "12px", borderRadius: "12px"}}>
-        <div style={{borderBottom: "1px solid #bebebeff", marginBottom: "18px"}}>
-            <h4 style={{margin: "0px 0px 12px 18px"}}>Aki Notes</h4>
+    <div style={{margin: "24px", padding: "12px", borderRadius: "12px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)", backgroundColor: "white"}}>
+        <div style={{borderBottom: "1px solid #bebebeff", marginBottom: "12px"}}>
+            <h4 style={{margin: "0px 0px 12px 0px"}}>Aki Notes</h4>
         </div>
         <div className={`navbar-link-div${location.pathname==="/"? "-active": ""}`}>
             <Link to="/" className={`navbar-link${location.pathname==="/"? "-active": ""}`}>Home</Link>
