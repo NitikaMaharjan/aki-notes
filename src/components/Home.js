@@ -1,20 +1,13 @@
 import React,  { useContext, useEffect } from 'react';
-import NoteContext from "../context/notes/NoteContext";
+import ThemeContext from "../context/theme/ThemeContext";
 
 export default function Home() {
 
-  const valueFromNoteContext = useContext(NoteContext);
-
-  useEffect(() => {  
-    return () => {
-      valueFromNoteContext.userInfoUpdate();
-      // eslint-disable-next-line
-    }
-  }, [])
+  const theme = useContext(ThemeContext);
   
   return (
-    <div className="content">
-      hi this is {valueFromNoteContext.userInfo.name} {valueFromNoteContext.userInfo.age} years old.
+    <div className="content" style={{color: `${theme=="light"?"black":"white"}`}}>
+      This is home page.
     </div>
   )
 }
