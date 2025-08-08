@@ -1,13 +1,13 @@
 .top-navbar{
     display: flex;
-    align-items: top;
+    align-items: center;
     justify-content: right;
     width: 80%;
-    height: 54px;
+    height: 66px;
     position: fixed;
-    margin: 12px 24px 24px 250px;
+    margin: 0px 24px 24px 250px;
     padding: 0px;
-    /* border: 1px solid black; */
+    z-index: 1;
 }
 
 .theme-icon-wrapper-light, .theme-icon-wrapper-dark{
@@ -48,7 +48,7 @@
 .navbar-link-div-active{
     margin: 0px 0px 6px 0px;
     padding: 4px 0px 4px 16px;
-    border-left: 4px solid #494545;
+    border-left: 4px solid #212529;
     background-color: #fedcdc;
 }
 
@@ -77,7 +77,7 @@
     margin: 0px 0px 6px 0px;
     padding: 4px 0px 4px 16px;
     border-left: 4px solid #ffcece;
-    background-color: rgb(56, 64, 66);
+    background-color: #1a1a1a;
 }
 
 .navbar-link-dark-div:last-child{
@@ -101,6 +101,15 @@
 }
 
 .content{
-    margin-top: 94px;
-    margin-left: 250px;
+    width: 75%;
+    margin-top: 72px;
+    margin-left: 274px;
+}
+
+.notes-collection{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: center;
+    gap: 24px;
+    margin: 24px 0px;
 }

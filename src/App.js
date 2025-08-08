@@ -43,7 +43,7 @@ function App() {
               <div className="side-navbar">
                 <SideNavbar/>
               </div>
-              <div className="top-navbar">
+              <div className="top-navbar" style={{backgroundColor: `${iconSrc.alt=="light"?"rgb(247, 247, 247)":"#0e1011"}`}}>
                 <TopNavbar src={iconSrc.src} alt={iconSrc.alt} ChangeTheme={ChangeTheme}/>
               </div>
             </div>
