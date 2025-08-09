@@ -17,6 +17,7 @@
     border-radius: 25px;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 
 .theme-icon-wrapper-light:hover{
@@ -112,4 +113,33 @@
     justify-items: center;
     gap: 24px;
     margin: 24px 0px;
+}
+
+.add-note-form{
+    display: flex;
+    justify-content: center;
+    margin: 24px 0px;
+}
+
+.notes-btn, .notes-btn-active, .notes-btn-dark, .notes-btn-dark-active{
+    padding: 6px 12px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 24px;
+}
+
+.notes-btn{
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: white;    
+    color: #5e5959;
+}
+
+.notes-btn-active, .notes-btn-dark-active{
+    border: 1px solid #ffcece;
+    background-color: #fedcdc;
+}
+
+.notes-btn-dark{
+    border: 1px solid #424549;
+    background-color: #212529;    
+    color: #bebebeff;
 }

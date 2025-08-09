@@ -10,7 +10,7 @@ export default function NoteState(props) {
             "title": "Grocery List",
             "description": "Buy milk, bread, eggs, and some fresh vegetables like carrots, spinach, and tomatoes before Friday. Also check if we need coffee, tea, or any cleaning supplies like detergent.",
             "tag": "Personal",
-            "date": { "$date": "2025-08-05T08:15:22.000Z" },
+            "date": "2025-08-05T08:15:22.000Z",
             "__v": 0
         },
         {
@@ -19,7 +19,7 @@ export default function NoteState(props) {
             "title": "Team Meeting Notes",
             "description": "We discussed Q3 goals including launching the new feature set, fixing long-standing bugs, and updating the onboarding flow. Everyone must submit task breakdowns by end of this week.",
             "tag": "Work",
-            "date": { "$date": "2025-08-04T10:45:30.000Z" },
+            "date": "2025-08-04T10:45:30.000Z",
             "__v": 0
         },
         {
@@ -28,7 +28,7 @@ export default function NoteState(props) {
             "title": "Book Ideas",
             "description": "Outline main characters and build the initial plot focusing on the ethical dilemmas faced by an AI system that gains consciousness. Consider themes like autonomy, memory, and control.",
             "tag": "Creative",
-            "date": { "$date": "2025-08-03T16:12:10.000Z" },
+            "date": "2025-08-03T16:12:10.000Z",
             "__v": 0
         },
         {
@@ -37,7 +37,7 @@ export default function NoteState(props) {
             "title": "Learn GraphQL",
             "description": "Start with the GraphQL official documentation, watch a couple of YouTube tutorials, and then build a small API to understand how queries, mutations, and resolvers work together.",
             "tag": "Study",
-            "date": { "$date": "2025-08-02T09:00:00.000Z" },
+            "date": "2025-08-02T09:00:00.000Z",
             "__v": 0
         },
         {
@@ -46,7 +46,7 @@ export default function NoteState(props) {
             "title": "Trip Checklist",
             "description": "Ensure all essentials are packed: clothes for 3 days, chargers, camera, valid ID, bus tickets, emergency cash, and personal toiletries. Check Pokhara weather before final packing.",
             "tag": "Travel",
-            "date": { "$date": "2025-08-01T07:32:10.000Z" },
+            "date": "2025-08-01T07:32:10.000Z",
             "__v": 0
         },
         {
@@ -55,7 +55,7 @@ export default function NoteState(props) {
             "title": "Daily Gratitude",
             "description": "Today I’m grateful for my supportive family, good health, the opportunity to learn new things, and a peaceful moment enjoying my morning coffee in the balcony before work.",
             "tag": "Wellbeing",
-            "date": { "$date": "2025-08-01T21:04:45.000Z" },
+            "date": "2025-08-01T21:04:45.000Z",
             "__v": 0
         },
         {
@@ -64,7 +64,7 @@ export default function NoteState(props) {
             "title": "Fix Navbar Bug",
             "description": "The navbar overlaps with content on smaller screens. Investigate whether the issue is due to flex settings or padding/margin misalignment, and test fixes across all devices.",
             "tag": "Work",
-            "date": { "$date": "2025-08-02T13:20:05.000Z" },
+            "date": "2025-08-02T13:20:05.000Z",
             "__v": 0
         },
         {
@@ -73,7 +73,7 @@ export default function NoteState(props) {
             "title": "Gym Routine",
             "description": "Split routine into upper body (Mon/Wed/Fri) and cardio (Tue/Thu). Include warm-ups, stretching, and track sets and reps in workout app. Try to hit gym before 7:30 AM daily.",
             "tag": "Fitness",
-            "date": { "$date": "2025-08-06T06:50:15.000Z" },
+            "date": "2025-08-06T06:50:15.000Z",
             "__v": 0
         },
         {
@@ -82,7 +82,7 @@ export default function NoteState(props) {
             "title": "Birthday Gift Ideas",
             "description": "Consider thoughtful gift options like a watch, a hardcover novel by their favorite author, a self-care kit with scented candles, or maybe even a voucher for a relaxing spa day.",
             "tag": "Personal",
-            "date": { "$date": "2025-08-05T18:34:21.000Z" },
+            "date": "2025-08-05T18:34:21.000Z",
             "__v": 0
         },
         {
@@ -91,7 +91,7 @@ export default function NoteState(props) {
             "title": "Fix Resume",
             "description": "Update resume with the latest full-stack project, add new skills like GraphQL and Docker, and adjust formatting to highlight achievements. Double-check spelling and export to PDF.",
             "tag": "Career",
-            "date": { "$date": "2025-08-07T10:22:08.000Z" },
+            "date": "2025-08-07T10:22:08.000Z",
             "__v": 0
         },
         {
@@ -100,7 +100,7 @@ export default function NoteState(props) {
             "title": "Ideas for Reels",
             "description": "Create short-form videos showing behind-the-scenes setups, quick 3-step tutorials, productivity hacks, or morning routines. Focus on adding captions and trending audio tracks.",
             "tag": "Content",
-            "date": { "$date": "2025-08-06T15:55:12.000Z" },
+            "date": "2025-08-06T15:55:12.000Z",
             "__v": 0
         },
         {
@@ -109,7 +109,7 @@ export default function NoteState(props) {
             "title": "Practice Meditation",
             "description": "Start each day with a 10-minute breathing session. Sit comfortably, focus on breath, and let go of distractions. Track progress weekly and try different meditation apps if needed.",
             "tag": "Wellbeing",
-            "date": { "$date": "2025-08-08T06:30:00.000Z" },
+            "date": "2025-08-08T06:30:00.000Z",
             "__v": 0
         }
     ];
