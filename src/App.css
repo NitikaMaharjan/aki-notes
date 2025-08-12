@@ -143,3 +143,22 @@
     background-color: #212529;    
     color: #bebebeff;
 }
+
+.modal-btn{
+    background-color: white;
+    border-radius: 25px;
+    border: none;
+    padding: 0px;
+    height: 40px;
+    width: 40px;
+    cursor: pointer;
+}
+
+.modal-btn img{
+    height: 22px;
+    width: 22px;
+}
+
+.modal-btn:hover{
+    background-color: rgba(128, 128, 128, 0.300);
+}
