@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import NoteContext from "../context/notes/NoteContext";
 import NoteItem from './NoteItem';
 
 export default function Note() {
-    const {notes, setNotes} = useContext(NoteContext);
+    const {notes, deleteNote} = useContext(NoteContext);
     const [selectedNote, setSelectedNote] = useState(null);
+    const [modal, setModal] = useState(null);
     const [date, setDate] = useState("");
     const [time, setTime] = useState(null);
     
@@ -12,9 +13,16 @@ export default function Note() {
         setSelectedNote(note);
         setDate(new Date(note.date.slice(0,10)));
         setTime(new Date(note.date));
-        const modal = new window.bootstrap.Modal(document.getElementById("exampleModal"));
-        modal.show();
+        const myModal = new window.bootstrap.Modal(document.getElementById("exampleModal"));
+        setModal(myModal);
     };
+
+    useEffect(() => {
+      if(modal!=null){
+        modal.show();
+      }
+    }, [modal]);
+    
     return (
         <>
             <h5 style={{margin: "24px 0px 0px 0px",padding: "0px", textAlign: "center"}}>Your Notes</h5>
@@ -31,7 +39,7 @@ export default function Note() {
                             <h5 className="modal-title" id="exampleModalLabel">{selectedNote?.title}</h5>
                             <div>
                                 <button className="modal-btn"><img src="/icons/edit.png" alt="edit" title="edit"/></button>
-                                <button className="modal-btn"><img src="/icons/delete.png" alt="edit" title="delete"/></button>
+                                <button className="modal-btn" onClick={()=>{deleteNote(selectedNote?._id); modal.hide();}}><img src="/icons/delete.png" alt="edit" title="delete"/></button>
                                 <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src="/icons/close.png" alt="edit" title="close"/></button>
                             </div>
                         </div>

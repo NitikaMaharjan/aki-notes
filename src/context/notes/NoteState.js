@@ -126,11 +126,15 @@ export default function NoteState(props) {
             "date": "2021-09-03T14:20:09.668Z",
             "__v": 0
         };
-        setNotes(notes.concat(note)) 
+        setNotes(notes.concat(note)); 
+    }
+
+    const deleteNote = (id)=>{
+        setNotes(notes.filter((note)=>{return note._id!=id}));
     }
 
     return (
-        <NoteContext.Provider value={{ notes, addNote }}>
+        <NoteContext.Provider value={{ notes, addNote, deleteNote }}>
             {props.children}
         </NoteContext.Provider>
     );

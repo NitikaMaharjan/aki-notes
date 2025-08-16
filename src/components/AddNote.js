@@ -4,7 +4,7 @@ import NoteContext from '../context/notes/NoteContext';
 
 export default function AddNote() {
     const theme = useContext(ThemeContext);
-    const {notes, addNote} = useContext(NoteContext);
+    const {addNote} = useContext(NoteContext);
     
     const [note, setNote] = useState({
         title: "", 
@@ -38,7 +38,7 @@ export default function AddNote() {
                         <input type="text" className="form-control" id="tag" name="tag" placeholder="Enter tag" onChange={handleChange}/>
                     </div>
                     <div style={{width: "100%", display: "flex", justifyContent: "right"}}>
-                        <button type="submit" className={`add-note-btn${theme=="light"?"":"-dark"}`} onClick={handleSubmit}>Submit</button>
+                        <button type="submit" className={`add-note-btn${theme=="light"?"":"-dark"}`} onClick={handleSubmit}>Add Note</button>
                     </div>
                 </form>
             </div>
