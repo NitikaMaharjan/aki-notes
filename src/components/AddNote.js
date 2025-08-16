@@ -13,7 +13,7 @@ export default function AddNote() {
     });
 
     const handleChange = (e)=>{
-        setNote({...note, [e.target.name]: e.target.value})
+        setNote({...note, [e.target.name]: e.target.value});
     }
 
     const handleSubmit = (e)=>{

@@ -7,7 +7,7 @@ export default function NoteItem(props) {
 
   return (
     <>
-      <div className="card" data-bs-theme={`${theme=="light"?"light":"dark"}`} style={{cursor: "pointer", width: "100%", height: "192px"}} onClick={props.OpenModal}>
+      <div className="card" data-bs-theme={`${theme=="light"?"light":"dark"}`} style={{cursor: "pointer", width: "100%", height: "192px"}} onClick={props.OpenNoteDetailModal}>
           <div className="card-body">
               <h5 className="card-title" style={{color: `${theme=="light"?"black":"white"}`}}>{props.note.title.length<=18?props.note.title:props.note.title.slice(0,18)+"..."}</h5>
               <div className="mb-2" style={{display: "flex"}}>

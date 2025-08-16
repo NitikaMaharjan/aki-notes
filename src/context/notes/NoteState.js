@@ -133,8 +133,16 @@ export default function NoteState(props) {
         setNotes(notes.filter((note)=>{return note._id!=id}));
     }
 
+    const editNote = (id, title, description, tag) => {
+        setNotes(prevNotes =>
+            prevNotes.map(note =>
+            note._id === id ? {...note, title, description, tag} : note
+            )
+        );
+    }
+
     return (
-        <NoteContext.Provider value={{ notes, addNote, deleteNote }}>
+        <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote }}>
             {props.children}
         </NoteContext.Provider>
     );
