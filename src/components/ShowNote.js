@@ -94,24 +94,23 @@ export default function Note() {
             <div className="modal fade bd-example-modal-lg" id="editModal" tabIndex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div className="modal-content">
-                        <div className="modal-header d-flex justify-content-between" style={{border: "none"}}>
-                            <input type="text" id="title" name="title" value={note.title} onChange={handleChange}/>
-                            <div>
-                                <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src="/icons/close.png" alt="edit" title="close"/></button>
-                            </div>
+                        <div className="modal-header justify-content-end" style={{border: "none", paddingBottom: "0px"}}>
+                            <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src="/icons/close.png" alt="edit" title="close"/></button>
                         </div>
-                        <div style={{display: "flex", alignItems: "center", margin: "0px", padding: "0px 16px"}}>
-                            <input type="text" id="tag" name="tag" value={note.tag} onChange={handleChange}/>
-                            <h6 className="mx-2" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>|</h6>
-                            <p style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{new Intl.DateTimeFormat('en-US', { year: 'numeric', day: 'numeric', month: 'short' }).format(date)}</p>                           
-                            <h6 className="mx-2" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>|</h6>
-                            <p style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{time?.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</p>
-                            <h6 className="mx-2" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>|</h6>
-                            <p style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{note.description.trim().length} characters</p>
+                        <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
+                            <label className="mb-1" style={{fontWeight: "500"}}>Title</label>
+                            <input type="text" className="form-control" id="title" name="title" value={note.title} placeholder="Enter title" onChange={handleChange}/>
                         </div>
-                        <div className="modal-body">
-                            <input type="text" id="description" name="description" value={note.description} onChange={handleChange}/>
-                            <button onClick={handleSubmit}>Edit Note</button>
+                        <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
+                            <label className="mb-1" style={{fontWeight: "500"}}>Tag</label>
+                            <input type="text" className="form-control" id="tag" name="tag" value={note.tag} placeholder="Enter tag" onChange={handleChange}/>
+                        </div>
+                        <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
+                            <label className="mb-1" style={{fontWeight: "500"}}>Description</label>
+                            <textarea className="form-control" id="description" name="description" value={note.description} placeholder="Enter description" rows="3" onChange={handleChange}></textarea>                          
+                        </div>                       
+                        <div className="modal-body" style={{display: "flex", justifyContent: "center", paddingTop: "4px"}}>
+                            <button className="add-note-btn" onClick={handleSubmit}>Edit Note</button>
                         </div>                       
                     </div>
                 </div>

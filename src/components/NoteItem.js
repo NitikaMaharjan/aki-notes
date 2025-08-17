@@ -15,7 +15,7 @@ export default function NoteItem(props) {
                 <p className="card-subtitle text-body-secondary mx-1" style={{margin: "0px", padding: "0px", fontSize: "14px"}}>|</p>
                 <p className="card-subtitle text-body-secondary" style={{margin: "0px", padding: "0px", fontSize: "14px"}}>{new Intl.DateTimeFormat('en-US', { year: 'numeric', day: 'numeric', month: 'short' }).format(date)}</p>
               </div>
-              <p className="card-text">{props.note.description.length<=100?props.note.description:props.note.description.slice(0,100)+"..."}</p>
+              <p className="card-text">{props.note.description.length<=80?props.note.description:props.note.description.slice(0,80)+"..."}</p>
           </div>
       </div>
   </>

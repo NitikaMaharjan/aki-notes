@@ -130,13 +130,13 @@ export default function NoteState(props) {
     }
 
     const deleteNote = (id)=>{
-        setNotes(notes.filter((note)=>{return note._id!=id}));
+        setNotes(notes.filter((note)=>{return note._id!==id}));
     }
 
     const editNote = (id, title, description, tag) => {
         setNotes(prevNotes =>
             prevNotes.map(note =>
-            note._id === id ? {...note, title, description, tag} : note
+            note._id === id ? {...note, title, description, tag: tag === ""?"Default":tag} : note
             )
         );
     }
