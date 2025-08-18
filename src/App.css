@@ -2,12 +2,69 @@
     display: flex;
     align-items: center;
     justify-content: right;
+    gap: 8px;
     width: 80%;
     height: 66px;
     position: fixed;
     margin: 0px 24px 24px 250px;
     padding: 0px;
     z-index: 1;
+}
+
+.login-btn{
+    padding: 4px 10px;
+    font-size: 15px;
+    border: none;
+    background-color: transparent;
+    color: black;
+    transition: 0.3s;
+}
+
+.login-btn:hover{
+    color: #5e5959;
+}
+
+.signup-btn{
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 15px;
+    border: 1px solid black;
+    background-color: transparent;
+    color: black;
+    transition: 0.3s;
+}
+
+.signup-btn:hover{
+    border: 1px solid #5e5959;
+    color: #5e5959;
+}
+
+.login-btn-dark{
+    padding: 4px 10px;
+    font-size: 15px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    transition: 0.3s;
+}
+
+.login-btn-dark:hover{
+    color: rgb(200, 200, 200);
+}
+
+.signup-btn-dark{
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 15px;
+    border: 1px solid white;
+    background-color: transparent;
+    color: white;
+    transition: 0.3s;
+}
+
+.signup-btn-dark:hover{
+    border: 1px solid rgb(200, 200, 200);
+    color: rgb(200, 200, 200);
 }
 
 .theme-icon-wrapper-light, .theme-icon-wrapper-dark{
@@ -101,12 +158,14 @@
     text-decoration: none;
 }
 
+/* content */
 .content{
     width: 75%;
     margin-top: 72px;
     margin-left: 274px;
 }
 
+/* notes page */
 .notes-collection{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -115,16 +174,11 @@
     margin: 24px 0px;
 }
 
-.add-note-form{
-    display: flex;
-    justify-content: center;
-    margin: 24px 0px;
-}
-
+/* notes page "your notes" and "add notes" buttons*/
 .notes-btn, .notes-btn-active, .notes-btn-dark, .notes-btn-dark-active{
-    padding: 6px 12px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    padding: 4px 10px;
     border-radius: 8px;
+    font-size: 15px;
 }
 
 .notes-btn{
@@ -144,6 +198,7 @@
     color: #bebebeff;
 }
 
+/* your notes page */
 .modal-btn{
     background-color: white;
     border-radius: 25px;
@@ -163,10 +218,22 @@
     background-color: rgba(128, 128, 128, 0.300);
 }
 
+/* add notes page */
+.add-note-form{
+    display: flex;
+    justify-content: center;
+    margin: 24px 0px;
+}
+
+.form-control:focus{
+    border-color: #ffcece;
+    box-shadow: 0 0 0 .20rem #ffcece90;
+}
+
 .add-note-btn{
-    padding: 5px 10px;
+    padding: 4px 10px;
     border-radius: 24px;
-    font-size: 16px;
+    font-size: 15px;
     border: 1px solid #ffcece;
     background-color: #ffcece;
     color: black;
@@ -176,9 +243,4 @@
 .add-note-btn:hover{
     border: 1px solid #ffa8a8;
     background-color: #ffa8a8;
-}
-
-.form-control:focus{
-    border-color: #ffcece;
-    box-shadow: 0 0 0 .20rem #ffcece90;
 }

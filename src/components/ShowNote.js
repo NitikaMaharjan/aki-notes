@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import NoteContext from "../context/notes/NoteContext";
+import ThemeContext from '../context/theme/ThemeContext';
 import NoteItem from './NoteItem';
 
 export default function Note() {
     const {notes, deleteNote, editNote} = useContext(NoteContext);
+    const theme = useContext(ThemeContext);
     const [selectedNote, setSelectedNote] = useState(null);
     const [modal, setModal] = useState(null);
     const [date, setDate] = useState("");
@@ -56,8 +58,12 @@ export default function Note() {
     }
     
     return (
-        <>
-            <h5 style={{margin: "24px 0px 0px 0px",padding: "0px", textAlign: "center"}}>Your Notes</h5>
+        <>  
+            {JSON.stringify(notes) === "[]"?
+                <p style={{margin: "24px 0px 0px 0px",padding: "0px", textAlign: "center", color: `${theme==="light"?"#5e5959":"rgb(200, 200, 200)"}`}}>Want to share a quick thought? Tap 'Add Note' to get started!</p>
+            :
+                <h5 style={{margin: "24px 0px 0px 0px",padding: "0px", textAlign: "center"}}>Your Notes</h5>
+            }
             <div className="notes-collection">
                 {notes.map((note)=>{
                     return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenModal(note)}/>

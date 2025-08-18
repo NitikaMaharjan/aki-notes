@@ -1,4 +1,4 @@
-import React,  { useContext, useEffect } from 'react';
+import React,  { useContext } from 'react';
 import ThemeContext from "../context/theme/ThemeContext";
 
 export default function Home() {
@@ -6,7 +6,7 @@ export default function Home() {
   const theme = useContext(ThemeContext);
   
   return (
-    <div className="content" style={{color: `${theme=="light"?"black":"white"}`}}>
+    <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
       This is home page.
     </div>
   )

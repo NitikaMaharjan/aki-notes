@@ -20,11 +20,13 @@ router.post('/signup', [
   body('email', 'Enter a valid email').isEmail(),
   body('password', 'Password must be at least 5 characters').isLength({ min: 5 })
 ], async (req, res) => {
+  let success = false;
   // checking if the request passed all validation rules
   const errors = validationResult(req);
 
    // if validation failed, return 400 Bad Request with the error messages
   if (!errors.isEmpty()) {
+    success = false;
     return res.status(400).json({ errors: errors.array() });
   }
 
@@ -33,6 +35,7 @@ router.post('/signup', [
     const user_exists = await User.findOne({email: req.body.email});
 
     if (user_exists){// if user exists then no new user is created
+      success = false;
       return res.status(400).json({ error: 'Email already exists' });
     }
 
@@ -53,8 +56,9 @@ router.post('/signup', [
     }
     const authtoken = jwt.sign(data, jwt_secret);
 
-    // responding with authentication token (in JSON format)
-    res.json({authtoken})
+    success = true;
+    // responding with success and authentication token (in JSON format)
+    res.json({ success, authtoken });
 
   } catch (err) {
     // logging other errors to console and returning 500 Internal Server Error
@@ -68,11 +72,13 @@ router.post('/login', [
   body('email', 'Enter a valid email').isEmail(),
   body('password', 'Password must not be empty').exists()
 ], async (req, res) => {
+  let success = false;
   // checking if the request passed all validation rules
   const errors = validationResult(req);
 
    // if validation failed, return 400 Bad Request with the error messages
   if (!errors.isEmpty()) {
+    success = false;
     return res.status(400).json({ errors: errors.array() });
   }
 
@@ -84,6 +90,7 @@ router.post('/login', [
     const user_exists = await User.findOne({email});
 
     if (!user_exists){
+      success = false;
       return res.status(400).json({ error: 'Enter valid credentials' });
     }
 
@@ -91,6 +98,7 @@ router.post('/login', [
     const password_matched = await bcrypt.compare(password, user_exists.password);
 
     if (!password_matched){
+      success = false;
       return res.status(400).json({ error: 'Enter valid credentials' });
     }
 
@@ -101,8 +109,9 @@ router.post('/login', [
     }
     const authtoken = jwt.sign(data, jwt_secret);
 
-    // responding with authentication token (in JSON format)
-    res.json({authtoken})
+    success = true;
+    // responding with success and authentication token (in JSON format)
+    res.json({ success, authtoken });
 
   } catch (err) {
     // logging other errors to console and returning 500 Internal Server Error

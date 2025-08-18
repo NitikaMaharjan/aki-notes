@@ -10,6 +10,8 @@ import Notes from './components/Notes';
 import ToDo from './components/ToDo';
 import BulletJournal from './components/BulletJournal';
 import Tracker from './components/Tracker';
+import Signup from './components/Signup';
+import Login from './components/Login';
 
 function App() {
 
@@ -19,7 +21,7 @@ function App() {
     });
 
   const ChangeTheme = () =>{
-    if (iconSrc.alt=="light"){
+    if (iconSrc.alt==="light"){
       setIconSrc({
         src: "/icons/moon.png",
         alt: "dark"
@@ -43,7 +45,7 @@ function App() {
               <div className="side-navbar">
                 <SideNavbar/>
               </div>
-              <div className="top-navbar" style={{backgroundColor: `${iconSrc.alt=="light"?"rgb(247, 247, 247)":"#0e1011"}`}}>
+              <div className="top-navbar" style={{backgroundColor: `${iconSrc.alt==="light"?"rgb(247, 247, 247)":"#0e1011"}`}}>
                 <TopNavbar src={iconSrc.src} alt={iconSrc.alt} ChangeTheme={ChangeTheme}/>
               </div>
             </div>
@@ -53,6 +55,8 @@ function App() {
               <Route path='/todolists' element={<ToDo/>}/>
               <Route path='/bulletjournal' element={<BulletJournal/>}/>
               <Route path='/tracker' element={<Tracker/>}/>
+              <Route path='/signup' element={<Signup/>}/>
+              <Route path='/login' element={<Login/>}/>
             </Routes>
           </BrowserRouter>
         </NoteState>
