@@ -122,12 +122,12 @@ router.post('/login', [
 
 // Route 3: fetching logged in user details using POST method, URL "/api/auth/fetchuserdetails" after logging in
 // fetchUserDetails is a middleware which verifies the authtoken, extracts user details
-router.post("/fetchuserdetails", fetchUserDetails, async (req, res) => {
+router.get("/fetchuserdetails", fetchUserDetails, async (req, res) => {
   try {
     const user_id = req.user.id;
     // fetching user details using user_id
     const user = await User.findById(user_id).select("-password");
-    res.send(user);
+    res.json(user);
   } catch (err) {
     // logging other errors to console and returning 500 Internal Server Error
     console.error(err);

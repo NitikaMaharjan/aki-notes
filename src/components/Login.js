@@ -24,7 +24,6 @@ export default function Login() {
       body: JSON.stringify({email: credentials.email, password: credentials.password})
     });
     const json = await response.json();
-    console.log(json);
     if (json.success){
         // Saving the auth token and redirect to home
         localStorage.setItem('token', json.authtoken); 
@@ -37,7 +36,7 @@ export default function Login() {
 
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
-      <h5 style={{textAlign: "center"}}>Log in</h5>
+      <h5 style={{textAlign: "center"}}>Welcome Back!</h5>
       <div className="add-note-form">
         <div style={{padding: "20px", width: "600px", backgroundColor: `${theme==="light"?"white":"#212529"}`, border: `${theme==="light"?"1px solid rgba(0, 0, 0, 0.15)":"1px solid #424549"}`, borderRadius: "6px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)"}}>
           <form data-bs-theme={`${theme==="light"?"light":"dark"}`}>

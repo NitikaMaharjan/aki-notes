@@ -9,7 +9,7 @@ export default function AddNote() {
     const [note, setNote] = useState({
         title: "", 
         description: "", 
-        tag: "Default"
+        tag: "General"
     });
 
     const handleChange = (e)=>{
@@ -23,8 +23,8 @@ export default function AddNote() {
 
     return (
         <div className="add-note-form">
-            <div style={{padding: "20px", width: "600px", backgroundColor: `${theme=="light"?"white":"#212529"}`, border: `${theme=="light"?"1px solid rgba(0, 0, 0, 0.15)":"1px solid #424549"}`, borderRadius: "6px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)"}}>
-                <form data-bs-theme={`${theme=="light"?"light":"dark"}`}>
+            <div style={{padding: "20px", width: "600px", backgroundColor: `${theme==="light"?"white":"#212529"}`, border: `${theme==="light"?"1px solid rgba(0, 0, 0, 0.15)":"1px solid #424549"}`, borderRadius: "6px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)"}}>
+                <form data-bs-theme={`${theme==="light"?"light":"dark"}`}>
                     <div className="form-group mb-1">
                         <label className="mb-1" style={{fontWeight: "500"}}>Title</label>
                         <input type="text" className="form-control" id="title" name="title" placeholder="Enter title" onChange={handleChange}/>

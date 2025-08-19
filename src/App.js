@@ -1,7 +1,8 @@
 import './App.css';
 import React, { useState } from 'react';
-import NoteState from "./context/notes/NoteState";
 import ThemeState from "./context/theme/ThemeState";
+import UserState from './context/user/UserState';
+import NoteState from "./context/notes/NoteState";
 import { BrowserRouter, Routes, Route } from "react-router";
 import SideNavbar from './components/SideNavbar';
 import TopNavbar from './components/TopNavbar';
@@ -39,27 +40,29 @@ function App() {
   return (
     <>
       <ThemeState theme={iconSrc.alt}> 
-        <NoteState>
-          <BrowserRouter>
-            <div style={{display: "flex"}}>
-              <div className="side-navbar">
-                <SideNavbar/>
+        <UserState>
+          <NoteState>
+            <BrowserRouter>
+              <div style={{display: "flex"}}>
+                <div className="side-navbar">
+                  <SideNavbar/>
+                </div>
+                <div className="top-navbar" style={{backgroundColor: `${iconSrc.alt==="light"?"rgb(247, 247, 247)":"#0e1011"}`}}>
+                  <TopNavbar src={iconSrc.src} alt={iconSrc.alt} ChangeTheme={ChangeTheme}/>
+                </div>
               </div>
-              <div className="top-navbar" style={{backgroundColor: `${iconSrc.alt==="light"?"rgb(247, 247, 247)":"#0e1011"}`}}>
-                <TopNavbar src={iconSrc.src} alt={iconSrc.alt} ChangeTheme={ChangeTheme}/>
-              </div>
-            </div>
-            <Routes>
-              <Route path='/' element={<Home/>}/>
-              <Route path='/notes' element={<Notes/>}/>
-              <Route path='/todolists' element={<ToDo/>}/>
-              <Route path='/bulletjournal' element={<BulletJournal/>}/>
-              <Route path='/tracker' element={<Tracker/>}/>
-              <Route path='/signup' element={<Signup/>}/>
-              <Route path='/login' element={<Login/>}/>
-            </Routes>
-          </BrowserRouter>
-        </NoteState>
+              <Routes>
+                <Route path='/' element={<Home/>}/>
+                <Route path='/notes' element={<Notes/>}/>
+                <Route path='/todolists' element={<ToDo/>}/>
+                <Route path='/bulletjournal' element={<BulletJournal/>}/>
+                <Route path='/tracker' element={<Tracker/>}/>
+                <Route path='/signup' element={<Signup/>}/>
+                <Route path='/login' element={<Login/>}/>
+              </Routes>
+            </BrowserRouter>
+          </NoteState>
+        </UserState>
       </ThemeState>  
     </>
   );

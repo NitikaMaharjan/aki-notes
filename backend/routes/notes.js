@@ -4,7 +4,21 @@ const router = express.Router();
 const { body, validationResult } = require("express-validator");
 var fetchUserDetails = require("../middleware/fetchUserDetails");
 
-// Route 1: adding a new note using POST method, URL "/api/notes/addnote" with validation
+// Route 1: fetching notes of logged in user using GET method, URL "/api/notes/getnote"
+router.get("/getnote", fetchUserDetails, async (req, res) => {
+  const user_id = req.user.id;
+
+  try {
+    const notes = await Notes.find({ user: user_id });
+    res.json(notes);
+  } catch (err) {
+    // logging other errors to console and returning 500 Internal Server Error
+    console.error(err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Route 2: adding a new note using POST method, URL "/api/notes/addnote" with validation
 router.post("/addnote", fetchUserDetails, [
     body("title", "Enter a valid title").isLength({ min: 5 }),
     body("description", "Description must be at least 5 characters long").isLength({ min: 5 }),
@@ -26,7 +40,7 @@ router.post("/addnote", fetchUserDetails, [
         user: user_id,
         title,
         description,
-        tag: tag || "General"
+        tag
       });
 
       res.json(new_note);
@@ -37,20 +51,6 @@ router.post("/addnote", fetchUserDetails, [
     }
   }
 );
-
-// Route 2: fetching notes of logged in user using GET method, URL "/api/notes/getnote"
-router.get("/getnote", fetchUserDetails, async (req, res) => {
-  const user_id = req.user.id;
-
-  try {
-    const notes = await Notes.find({ user: user_id });
-    res.json(notes);
-  } catch (err) {
-    // logging other errors to console and returning 500 Internal Server Error
-    console.error(err);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
 
 // Route 3: updating notes of logged in user using PUT method, URL "/api/notes/updatenote"
 router.put("/updatenote/:id", fetchUserDetails, async (req, res) => {
@@ -71,6 +71,9 @@ router.put("/updatenote/:id", fetchUserDetails, async (req, res) => {
     if (tag) {
       new_note.tag = tag;
     }
+
+    const note_edited_date = new Date();
+    new_note.date = note_edited_date.toISOString();
 
     // finding the note to be updated using notes id
     let note_exist = await Notes.findById(req.params.id);

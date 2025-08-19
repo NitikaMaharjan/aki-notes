@@ -1,12 +1,10 @@
 .top-navbar{
     display: flex;
     align-items: center;
-    justify-content: right;
-    gap: 8px;
     width: 80%;
     height: 66px;
     position: fixed;
-    margin: 0px 24px 24px 250px;
+    margin: 20px 24px 24px 250px;
     padding: 0px;
     z-index: 1;
 }
@@ -161,7 +159,7 @@
 /* content */
 .content{
     width: 75%;
-    margin-top: 72px;
+    margin-top: 96px;
     margin-left: 274px;
 }
 

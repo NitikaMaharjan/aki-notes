@@ -9,11 +9,11 @@ export default function SideNavbar() {
     const location = useLocation();
   
     return (
-        <div style={{margin: "24px", padding: "12px", borderRadius: "6px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)", backgroundColor: `${theme=="light"?"white":"#212529"}`, border: `${theme=="light"?"1px solid rgba(0, 0, 0, 0.15)":"1px solid #424549"}`}}>
-            <div style={{borderBottom: `${theme=="light"?"1px solid #bebebeff":"1px solid #424549"}`, marginBottom: "12px"}}>
-                <h4 style={{margin: "0px 0px 12px 0px", color: `${theme=="light"?"black":"white"}`}}>Aki Notes</h4>
+        <div style={{margin: "24px", padding: "12px", borderRadius: "6px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)", backgroundColor: `${theme==="light"?"white":"#212529"}`, border: `${theme==="light"?"1px solid rgba(0, 0, 0, 0.15)":"1px solid #424549"}`}}>
+            <div style={{borderBottom: `${theme==="light"?"1px solid #bebebeff":"1px solid #424549"}`, marginBottom: "12px"}}>
+                <h4 style={{margin: "0px 0px 12px 0px", color: `${theme==="light"?"black":"white"}`}}>Aki Notes</h4>
             </div>
-                {theme=="light"?
+                {theme==="light"?
                     <div>
                         <Link to="/" className={`navbar-link${location.pathname==="/"? "-active": ""}`}>
                             <div className={`navbar-link-div${location.pathname==="/"? "-active": ""}`}>
