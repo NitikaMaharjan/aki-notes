@@ -4,44 +4,39 @@ import ShowNote from './ShowNote';
 import AddNote from './AddNote';
 
 export default function Notes() {
-  const [switchContent, setSwitchContent] = useState({
-    content: "yourNotes",
-    state: "yourNotesActive"
-  });
+  const [switchContent, setSwitchContent] = useState(localStorage.getItem("activeContent")?localStorage.getItem("activeContent"):"yourNotes");
 
   const ChangeContent = (contentInfo) => {
     switch(contentInfo){
       case 1:
-        setSwitchContent({
-          content: "yourNotes",
-          state: "yourNotesActive"
-        });
+        localStorage.setItem("activeContent", "yourNotes");
         break;
       case 2:
-        setSwitchContent({
-          content: "addNote",
-          state: "addNoteActive"
-        });
-        break;       
-      }
+        localStorage.setItem("activeContent", "addNote");
+        break;
+      default:
+        localStorage.setItem("activeContent", "yourNotes");
+        break;      
+    }
+    setSwitchContent(localStorage.getItem("activeContent"));
   }
   
   const {theme} = useContext(ThemeContext);
   return (
-    <div className="content" style={{color: `${theme=="light"?"black":"white"}`}}>
-      {theme=="light"?
+    <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
+      {theme==="light"?
         <div>
-          {/* <button onClick={ChangeContent("yourNotes")}>Your Notes</button> // this would execute the function instantly during rendering instead of on click causing infinite loop */}
-          <button className={`notes-btn${switchContent.state=="yourNotesActive"?"-active":""}`} onClick={() => ChangeContent(1)}>Your Notes</button>{/* We wrap it in an arrow function so it doesn’t run immediately when the component renders. It will run only when the click happens, not every render.*/}
-          <button className={`notes-btn${switchContent.state=="addNoteActive"?"-active":""} mx-3`} onClick={() => ChangeContent(2)}>Add Note</button>
+          {/* <button onClick={ChangeContent(1)}>Your Notes</button> // this would execute the function instantly during rendering instead of on click causing infinite loop */}
+          <button className={`notes-btn${switchContent==="yourNotes"?"-active":""}`} onClick={() => ChangeContent(1)}>Your Notes</button>{/* We wrap it in an arrow function so it doesn’t run immediately when the component renders. It will run only when the click happens, not every render.*/}
+          <button className={`notes-btn${switchContent==="addNote"?"-active":""} mx-3`} onClick={() => ChangeContent(2)}>Add Note</button>
         </div>
       :
         <div>
-          <button className={`notes-btn-dark${switchContent.state=="yourNotesActive"?"-active":""}`} onClick={() => ChangeContent(1)}>Your Notes</button>
-          <button className={`notes-btn-dark${switchContent.state=="addNoteActive"?"-active":""} mx-3`} onClick={() => ChangeContent(2)}>Add Note</button>
+          <button className={`notes-btn-dark${switchContent==="yourNotes"?"-active":""}`} onClick={() => ChangeContent(1)}>Your Notes</button>
+          <button className={`notes-btn-dark${switchContent==="addNote"?"-active":""} mx-3`} onClick={() => ChangeContent(2)}>Add Note</button>
         </div>
       }
-      {switchContent.content=="yourNotes"?
+      {switchContent==="yourNotes"?
         <ShowNote/>
       :
         <AddNote/>

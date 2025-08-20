@@ -1,32 +1,25 @@
-import React, { useEffect, useContext }from 'react';
+import React, { useContext }from 'react';
 import { Link, useNavigate } from "react-router";
 import ThemeContext from '../context/theme/ThemeContext';
-import UserContext from '../context/user/UserContext';
 
 export default function TopNavbar() {
 
   const {theme, ChangeTheme} = useContext(ThemeContext);
-  const {userInfo, fetchUserInfo} = useContext(UserContext);
   let navigate = useNavigate();
   
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem("username");
+    localStorage.removeItem("activeContent");
+    localStorage.removeItem("token");
     navigate("/login");
   }
 
-  useEffect(() => {
-    if(localStorage.getItem('token')){
-      fetchUserInfo();
-    }
-    // eslint-disable-next-line
-  }, [localStorage.getItem('token')]);
-
   return (
     <>
-      {localStorage.getItem('token')?
+      {localStorage.getItem("token")?
         <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
           <div>
-            <h5 style={{margin: "0px 0px 0px 22px", padding: "0px", color: `${theme==="light"?"black":"white"}`}}>Hello, {`${userInfo.name}`}</h5>
+            <h5 style={{margin: "0px 0px 0px 22px", padding: "0px", color: `${theme==="light"?"black":"white"}`}}>Hello, {localStorage.getItem("username")?localStorage.getItem("username"):"User"}</h5>
           </div>
           <div style={{display: "flex", gap: "8px"}}>
             <button className={`login-btn${theme==="light"?"":"-dark"}`} onClick={handleLogout}>Log out</button>

@@ -10,7 +10,7 @@ export default function NoteState(props) {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                "authtoken": localStorage.getItem('token')
+                "authtoken": localStorage.getItem("token")
             }
         });
         const fetchedNotes = await response.json();
@@ -22,7 +22,7 @@ export default function NoteState(props) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                "authtoken": localStorage.getItem('token')
+                "authtoken": localStorage.getItem("token")
             },
             body: JSON.stringify({title, description, tag})
         });
@@ -35,7 +35,7 @@ export default function NoteState(props) {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                "authtoken": localStorage.getItem('token')
+                "authtoken": localStorage.getItem("token")
             },
             body: JSON.stringify({title, description, tag})
         });
@@ -53,7 +53,7 @@ export default function NoteState(props) {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                "authtoken": localStorage.getItem('token')
+                "authtoken": localStorage.getItem("token")
             }
         });
         const json = await response.json();

@@ -1,9 +1,11 @@
 import React,  { useState, useContext } from 'react';
 import ThemeContext from "../context/theme/ThemeContext";
 import { useNavigate } from "react-router";
+import UserContext from '../context/user/UserContext';
 
 export default function Login() {
   const {theme} = useContext(ThemeContext);
+  const {fetchUserInfo} = useContext(UserContext);
   let navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
@@ -26,7 +28,8 @@ export default function Login() {
     const json = await response.json();
     if (json.success){
         // Saving the auth token and redirect to home
-        localStorage.setItem('token', json.authtoken); 
+        localStorage.setItem("token", json.authtoken); 
+        await fetchUserInfo();
         navigate("/");
     }
     else{
