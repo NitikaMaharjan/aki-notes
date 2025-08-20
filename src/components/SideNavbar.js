@@ -4,7 +4,7 @@ import ThemeContext from '../context/theme/ThemeContext';
 
 export default function SideNavbar() {
 
-    const theme = useContext(ThemeContext);
+    const {theme} = useContext(ThemeContext);
 
     const location = useLocation();
   

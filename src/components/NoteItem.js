@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import ThemeContext from "../context/theme/ThemeContext";
 
 export default function NoteItem(props) {
-  const theme = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
   const date = new Date(props.note.date.slice(0,10));
 
   return (

@@ -3,7 +3,7 @@ import ThemeContext from "../context/theme/ThemeContext";
 import { useNavigate } from "react-router";
 
 export default function Signup() {
-  const theme = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
   let navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     name: "",

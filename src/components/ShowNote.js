@@ -5,7 +5,7 @@ import NoteItem from './NoteItem';
 
 export default function Note() {
     
-    const theme = useContext(ThemeContext);
+    const {theme} = useContext(ThemeContext);
     const {notes, fetchNote, deleteNote, editNote} = useContext(NoteContext);
     const [selectedNote, setSelectedNote] = useState({
         _id: "",

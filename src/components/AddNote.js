@@ -3,7 +3,7 @@ import ThemeContext from '../context/theme/ThemeContext';
 import NoteContext from '../context/notes/NoteContext';
 
 export default function AddNote() {
-    const theme = useContext(ThemeContext);
+    const {theme} = useContext(ThemeContext);
     const {addNote} = useContext(NoteContext);
     
     const [note, setNote] = useState({

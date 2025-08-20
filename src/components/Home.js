@@ -3,7 +3,7 @@ import ThemeContext from "../context/theme/ThemeContext";
 
 export default function Home() {
 
-  const theme = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
   
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>

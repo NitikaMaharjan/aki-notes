@@ -26,7 +26,7 @@ export default function Notes() {
       }
   }
   
-  const theme = useContext(ThemeContext);
+  const {theme} = useContext(ThemeContext);
   return (
     <div className="content" style={{color: `${theme=="light"?"black":"white"}`}}>
       {theme=="light"?

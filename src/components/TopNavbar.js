@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router";
 import ThemeContext from '../context/theme/ThemeContext';
 import UserContext from '../context/user/UserContext';
 
-export default function TopNavbar(props) {
+export default function TopNavbar() {
 
-  const theme = useContext(ThemeContext);
+  const {theme, ChangeTheme} = useContext(ThemeContext);
   const {userInfo, fetchUserInfo} = useContext(UserContext);
   let navigate = useNavigate();
   
@@ -18,6 +18,7 @@ export default function TopNavbar(props) {
     if(localStorage.getItem('token')){
       fetchUserInfo();
     }
+    // eslint-disable-next-line
   }, [localStorage.getItem('token')]);
 
   return (
@@ -28,18 +29,18 @@ export default function TopNavbar(props) {
             <h5 style={{margin: "0px 0px 0px 22px", padding: "0px", color: `${theme==="light"?"black":"white"}`}}>Hello, {`${userInfo.name}`}</h5>
           </div>
           <div style={{display: "flex", gap: "8px"}}>
-            <button className={`login-btn${props.alt==="light"?"":"-dark"}`} onClick={handleLogout}>Log out</button>
-            <div className={`theme-icon-wrapper${props.alt==="light"?"-light":"-dark"}`} onClick={props.ChangeTheme} title="change theme">
-              <img src={props.src} height="20px" width="20px" alt={`${props.alt} theme button`}/>
+            <button className={`login-btn${theme==="light"?"":"-dark"}`} onClick={handleLogout}>Log out</button>
+            <div className={`theme-icon-wrapper${theme==="light"?"-light":"-dark"}`} onClick={()=>ChangeTheme()} title="change theme">
+              <img src={theme==="light"?"/icons/moon.png":"/icons/sun.png"} height="20px" width="20px" alt={`${theme==="light"?"dark":"light"} theme button`}/>
             </div>
           </div>
         </div>
       :
       <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "right", gap: "8px"}}>
-        <Link to="/login"><button className={`login-btn${props.alt==="light"?"":"-dark"}`}>Log in</button></Link>
-        <Link to="/signup"><button className={`signup-btn${props.alt==="light"?"":"-dark"}`}>Sign up</button></Link>
-        <div className={`theme-icon-wrapper${props.alt==="light"?"-light":"-dark"}`} onClick={props.ChangeTheme} title="change theme">
-          <img src={props.src} height="20px" width="20px" alt={`${props.alt} theme button`}/>
+        <Link to="/login"><button className={`login-btn${theme==="light"?"":"-dark"}`}>Log in</button></Link>
+        <Link to="/signup"><button className={`signup-btn${theme==="light"?"":"-dark"}`}>Sign up</button></Link>
+        <div className={`theme-icon-wrapper${theme==="light"?"-light":"-dark"}`} onClick={()=>ChangeTheme()} title="change theme">
+          <img src={theme==="light"?"/icons/moon.png":"/icons/sun.png"} height="20px" width="20px" alt={`${theme==="light"?"dark":"light"} theme button`}/>
         </div>
       </div>
       }
