@@ -2,6 +2,7 @@ import './App.css';
 import React, { useContext } from 'react';
 import ThemeContext from './context/theme/ThemeContext';
 import UserState from './context/user/UserState';
+import TextState from './context/text/TextState';
 import NoteState from "./context/notes/NoteState";
 import { BrowserRouter, Routes, Route } from "react-router";
 import SideNavbar from './components/SideNavbar';
@@ -22,27 +23,29 @@ function App() {
   return (
     <>
       <UserState>
-        <NoteState>
-          <BrowserRouter>
-            <div style={{display: "flex"}}>
-              <div className="side-navbar">
-                <SideNavbar/>
+        <TextState>
+          <NoteState>
+            <BrowserRouter>
+              <div style={{display: "flex"}}>
+                <div className="side-navbar">
+                  <SideNavbar/>
+                </div>
+                <div className="top-navbar" style={{backgroundColor: `${theme==="light"?"rgb(247, 247, 247)":"#0e1011"}`}}>
+                  <TopNavbar/>
+                </div>
               </div>
-              <div className="top-navbar" style={{backgroundColor: `${theme==="light"?"rgb(247, 247, 247)":"#0e1011"}`}}>
-                <TopNavbar/>
-              </div>
-            </div>
-            <Routes>
-              <Route path='/' element={<Home/>}/>
-              <Route path='/notes' element={<Notes/>}/>
-              <Route path='/todolists' element={<ToDo/>}/>
-              <Route path='/bulletjournal' element={<BulletJournal/>}/>
-              <Route path='/tracker' element={<Tracker/>}/>
-              <Route path='/signup' element={<Signup/>}/>
-              <Route path='/login' element={<Login/>}/>
-            </Routes>
-          </BrowserRouter>
-        </NoteState>
+              <Routes>
+                <Route path='/' element={<Home/>}/>
+                <Route path='/notes' element={<Notes/>}/>
+                <Route path='/todolists' element={<ToDo/>}/>
+                <Route path='/bulletjournal' element={<BulletJournal/>}/>
+                <Route path='/tracker' element={<Tracker/>}/>
+                <Route path='/signup' element={<Signup/>}/>
+                <Route path='/login' element={<Login/>}/>
+              </Routes>
+            </BrowserRouter>
+          </NoteState>
+        </TextState>
       </UserState> 
     </>
   );

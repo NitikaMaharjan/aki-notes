@@ -4,6 +4,8 @@ import ShowNote from './ShowNote';
 import AddNote from './AddNote';
 
 export default function Notes() {
+  
+  const {theme} = useContext(ThemeContext);
   const [switchContent, setSwitchContent] = useState(localStorage.getItem("activeContent")?localStorage.getItem("activeContent"):"yourNotes");
 
   const ChangeContent = (contentInfo) => {
@@ -21,7 +23,6 @@ export default function Notes() {
     setSwitchContent(localStorage.getItem("activeContent"));
   }
   
-  const {theme} = useContext(ThemeContext);
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
       {theme==="light"?
