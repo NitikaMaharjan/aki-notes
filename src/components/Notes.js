@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ThemeContext from "../context/theme/ThemeContext";
+import { useNavigate } from 'react-router';
 import ShowNote from './ShowNote';
 import AddNote from './AddNote';
 
@@ -7,6 +8,14 @@ export default function Notes() {
   
   const {theme} = useContext(ThemeContext);
   const [switchContent, setSwitchContent] = useState(localStorage.getItem("activeContent")?localStorage.getItem("activeContent"):"yourNotes");
+  let navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!localStorage.getItem("token")){
+      navigate("/login");
+    }
+    // eslint-disable-next-line
+  },[]);  
 
   const ChangeContent = (contentInfo) => {
     switch(contentInfo){
