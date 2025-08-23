@@ -101,16 +101,16 @@ export default function Note() {
                             <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src="/icons/close.png" alt="edit" title="close"/></button>
                         </div>
                         <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
-                            <label className="mb-1" style={{fontWeight: "500"}}>Title</label>
-                            <input type="text" className="form-control" id="title" name="title" value={selectedNote.title} placeholder="Enter title" onChange={handleChange}/>
+                            <label htmlFor="title" className="mb-1" style={{fontWeight: "500"}}>Title</label>
+                            <input type="text" className="form-control" id="title" name="title" value={selectedNote.title} placeholder="Enter title" onChange={handleChange} autoComplete="true"/>
                         </div>
                         <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
-                            <label className="mb-1" style={{fontWeight: "500"}}>Tag</label>
-                            <input type="text" className="form-control" id="tag" name="tag" value={selectedNote.tag} placeholder="Enter tag" onChange={handleChange}/>
+                            <label htmlFor="tag" className="mb-1" style={{fontWeight: "500"}}>Tag</label>
+                            <input type="text" className="form-control" id="tag" name="tag" value={selectedNote.tag} placeholder="Enter tag" onChange={handleChange} autoComplete="true"/>
                         </div>
                         <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
-                            <label className="mb-1" style={{fontWeight: "500"}}>Description</label>
-                            <textarea className="form-control" id="description" name="description" value={selectedNote.description} placeholder="Enter description" rows="3" onChange={handleChange}></textarea>                          
+                            <label htmlFor="description" className="mb-1" style={{fontWeight: "500"}}>Description</label>
+                            <textarea className="form-control" id="description" name="description" value={selectedNote.description} placeholder="Enter description" rows="3" onChange={handleChange} autoComplete="true"></textarea>                          
                         </div>                       
                         <div className="modal-body" style={{display: "flex", justifyContent: "center", paddingTop: "4px"}}>
                             <button className="add-note-btn" onClick={handleSubmit}>Edit Note</button>
