@@ -20,6 +20,22 @@ function App() {
   const {theme} = useContext(ThemeContext);
   document.body.style.backgroundColor= localStorage.getItem("bgColor")?localStorage.getItem("bgColor"):"rgb(247, 247, 247)";
 
+  const form_contorl_style = document.createElement("style");
+  form_contorl_style.textContent = `
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0px 1000px ${theme==="light"?"white":"#212529"} inset !important;
+    }
+  `;
+  document.head.appendChild(form_contorl_style);
+
   return (
     <>
       <UserState>
