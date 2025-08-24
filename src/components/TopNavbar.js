@@ -11,6 +11,7 @@ export default function TopNavbar() {
   let navigate = useNavigate();
   
   const handleLogout = () => {
+    localStorage.removeItem("loggedInUsername");
     localStorage.removeItem("username");
     localStorage.removeItem("activeContent");
     localStorage.removeItem("token");
@@ -41,7 +42,7 @@ export default function TopNavbar() {
           </>
         }
         
-        <div className={`theme-icon-wrapper${theme==="light"?"-light":"-dark"}`} onClick={()=>ChangeTheme()} title="change theme">
+        <div className={`theme-icon-wrapper${theme==="light"?"-light":"-dark"}`} onClick={()=>ChangeTheme()} title={`change to ${theme==="light"?"dark":"light"} theme`}>
           <img src={theme==="light"?"/icons/moon.png":"/icons/sun.png"} height="20px" width="20px" alt={`${theme==="light"?"dark":"light"} theme button`}/>
         </div>
       </div>

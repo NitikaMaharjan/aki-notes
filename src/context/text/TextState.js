@@ -35,8 +35,17 @@ export default function TextState(props) {
         return  text.length<=80?text:text.slice(0,80)+"...";
     }
 
+    const calculateCharacters = (text) => {
+        return text.trim().length + (text.trim().length===1?" character":" characters");
+    }
+    
+    const calculateWords = (text) => {
+        text = text.trim();
+        return text === "" ? "0 words" : text.split(/\s+/).length + (text.split(/\s+/).length===1?" word": " words");
+    }
+
     return (
-        <TextContext.Provider value={{handleCapitalizeFirstLetter, giveMeDay, giveMeTime, trimTitle, trimDescription}}>
+        <TextContext.Provider value={{handleCapitalizeFirstLetter, giveMeDay, giveMeTime, trimTitle, trimDescription, calculateCharacters, calculateWords}}>
             {props.children}
         </TextContext.Provider>
     )

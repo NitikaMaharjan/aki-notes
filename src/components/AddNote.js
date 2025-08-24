@@ -7,16 +7,16 @@ export default function AddNote() {
     const {addNote} = useContext(NoteContext);
     
     const [note, setNote] = useState({
-        title: "", 
+        title: "Untitled", 
         description: "", 
         tag: "General"
     });
 
-    const handleChange = (e)=>{
+    const handleChange = (e) =>{
         setNote({...note, [e.target.name]: e.target.value});
     }
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e) =>{
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
     }

@@ -8,11 +8,10 @@ const NotesSchema = new Schema({
     },
     title:{
         type: String,
-        required: true
+        default: "Untitled"
     },
     description:{
-        type: String,
-        required: true
+        type: String
     },
     tag:{
         type: String,

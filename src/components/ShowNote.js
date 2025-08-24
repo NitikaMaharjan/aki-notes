@@ -7,7 +7,7 @@ import NoteItem from './NoteItem';
 export default function Note() {
     
     const {theme} = useContext(ThemeContext);
-    const {handleCapitalizeFirstLetter, giveMeDay, giveMeTime} = useContext(TextContext);
+    const {handleCapitalizeFirstLetter, giveMeDay, giveMeTime, calculateCharacters, calculateWords} = useContext(TextContext);
     const {notes, fetchNote, deleteNote, editNote} = useContext(NoteContext);
     const [selectedNote, setSelectedNote] = useState({
         _id: "",
@@ -32,7 +32,9 @@ export default function Note() {
     };
 
     useEffect(() => {
-        fetchNote();
+        if(localStorage.getItem("token")){
+            fetchNote();
+        }
         // eslint-disable-next-line
     }, []);
     
@@ -47,7 +49,7 @@ export default function Note() {
     }
 
     const handleSubmit = async()=>{
-        await editNote(selectedNote._id, selectedNote.title, selectedNote.description, selectedNote.tag===""?"General":selectedNote.tag);
+        await editNote(selectedNote._id, selectedNote.title===""?"Untitled":selectedNote.title, selectedNote.description===""?" ":selectedNote.description, selectedNote.tag===""?"General":selectedNote.tag);
         await fetchNote();
         activeModal.hide();
     }
@@ -67,25 +69,27 @@ export default function Note() {
                 </>
             }
 
-            <div className="modal fade bd-example-modal-lg" id="noteDetailModal" tabIndex="-1" role="dialog" aria-labelledby="noteDetailModalLabel" aria-hidden="true">
+            <div className="modal fade bd-example-modal-lg" id="noteDetailModal" tabIndex="-1" role="dialog" aria-labelledby="noteDetailModalLabel" aria-hidden="true" data-bs-theme={`${theme==="light"?"light":"dark"}`}>
                 <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header d-flex justify-content-between" style={{border: "none"}}>
-                            <h5 className="modal-title" id="noteDetailModalLabel">{selectedNote?.title}</h5>
+                            <h5 className="modal-title" id="noteDetailModalLabel" style={{color: `${theme==="light"?"black":"white"}`}}>{selectedNote?.title}</h5>
                             <div>
-                                <button className="modal-btn" onClick={()=>{activeModal.hide(); OpenEditModal();}}><img src="/icons/edit.png" alt="edit" title="edit"/></button>
-                                <button className="modal-btn" onClick={()=>{deleteNote(selectedNote?._id); activeModal.hide();}}><img src="/icons/delete.png" alt="edit" title="delete"/></button>
-                                <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src="/icons/close.png" alt="edit" title="close"/></button>
+                                <button className="modal-btn" onClick={()=>{activeModal.hide(); OpenEditModal();}}><img src={`${theme==="light"?"/icons/edit.png":"/icons/edit2.png"}`} alt="edit" title="edit"/></button>
+                                <button className="modal-btn" onClick={()=>{deleteNote(selectedNote?._id); activeModal.hide();}}><img src={`${theme==="light"?"/icons/delete.png":"/icons/delete2.png"}`} alt="edit" title="delete"/></button>
+                                <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} alt="edit" title="close"/></button>
                             </div>
                         </div>
                         <div style={{display: "flex", alignItems: "center", margin: "0px", padding: "0px 16px"}}>
-                            <h6 style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{handleCapitalizeFirstLetter(selectedNote?.tag)}</h6>
-                            <h6 className="mx-2" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>|</h6>
-                            <p style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{giveMeDay(selectedNote?.date)}</p>                           
-                            <h6 className="mx-2" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>|</h6>
-                            <p style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{giveMeTime(selectedNote?.date)}</p>
-                            <h6 className="mx-2" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>|</h6>
-                            <p style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{selectedNote?.description.trim().length} characters</p>
+                            <h6 className="card-subtitle text-body-secondary" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{handleCapitalizeFirstLetter(selectedNote?.tag)}</h6>
+                            <h6 className="card-subtitle text-body-secondary mx-2" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>|</h6>
+                            <p className="card-subtitle text-body-secondary" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{giveMeDay(selectedNote?.date)}</p>                           
+                            <h6 className="card-subtitle text-body-secondary mx-2" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>|</h6>
+                            <p className="card-subtitle text-body-secondary" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{giveMeTime(selectedNote?.date)}</p>
+                            <h6 className="card-subtitle text-body-secondary mx-2" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>|</h6>
+                            <p className="card-subtitle text-body-secondary" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{calculateCharacters(selectedNote?.description)}</p>
+                            <h6 className="card-subtitle text-body-secondary mx-2" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>|</h6>
+                            <p className="card-subtitle text-body-secondary" style={{margin: "0px", padding: "0px", color: "#212529bf"}}>{calculateWords(selectedNote?.description)}</p>
                         </div>
                         <div className="modal-body">
                             {selectedNote?.description}
@@ -94,11 +98,11 @@ export default function Note() {
                 </div>
             </div>
 
-            <div className="modal fade bd-example-modal-lg" id="editModal" tabIndex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div className="modal fade bd-example-modal-lg" id="editModal" tabIndex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-bs-theme={`${theme==="light"?"light":"dark"}`}>
                 <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header justify-content-end" style={{border: "none", paddingBottom: "0px"}}>
-                            <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src="/icons/close.png" alt="edit" title="close"/></button>
+                            <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} alt="edit" title="close"/></button>
                         </div>
                         <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
                             <label htmlFor="title" className="mb-1" style={{fontWeight: "500"}}>Title</label>

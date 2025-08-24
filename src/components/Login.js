@@ -12,11 +12,11 @@ export default function Login() {
     password: ""
   });
 
-  const handleChange = (e)=>{
+  const handleChange = (e) =>{
     setCredentials({...credentials, [e.target.name]: e.target.value});
   }
 
-  const handleSubmit = async(e)=>{
+  const handleSubmit = async(e) =>{
     e.preventDefault();
     const response = await fetch("http://localhost:5000/api/auth/login", {
       method: 'POST',

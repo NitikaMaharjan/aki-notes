@@ -19,19 +19,8 @@ router.get("/getnote", fetchUserDetails, async (req, res) => {
 });
 
 // Route 2: adding a new note using POST method, URL "/api/notes/addnote" with validation
-router.post("/addnote", fetchUserDetails, [
-    body("title", "Enter a valid title").isLength({ min: 5 }),
-    body("description", "Description must be at least 5 characters long").isLength({ min: 5 }),
-  ], async (req, res) => {
-
-    // checking if the request passed all validation rules
-    const errors = validationResult(req);
-
-    // if validation failed, return 400 Bad Request with the error messages
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
+router.post("/addnote", fetchUserDetails, async (req, res) => {
+  
     const user_id = req.user.id;
     const { title, description, tag } = req.body;
 
