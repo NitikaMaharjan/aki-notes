@@ -34,15 +34,16 @@ export default function Notes() {
   
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
-      <div>
-        {/* <button onClick={ChangeContent(1)}>Your Notes</button> // this would execute the function instantly during rendering instead of on click causing infinite loop */}
-        <button className={`notes-btn${theme==="light"?"":"-dark"}${switchContent==="yourNotes"?"-active":""}`} onClick={() => {ChangeContent(1)}}>Your Notes</button>{/* We wrap it in an arrow function so it doesn’t run immediately when the component renders. It will run only when the click happens, not every render.*/}
-        <button className={`notes-btn${theme==="light"?"":"-dark"}${switchContent==="addNote"?"-active":""} mx-3`} onClick={() => {ChangeContent(2)}}>Add Note</button>
-      </div>
       {switchContent==="yourNotes"?
-        <ShowNote/>
-      :
-        <AddNote/>
+        <div>
+          <ShowNote/>
+          <button className="add-note-btn" onClick={() => {ChangeContent(2)}} style={{position: "fixed", bottom: "32px", right: "36px", zIndex: "1"}}>+ Add Note</button>
+        </div>
+      : 
+        <div>
+          <button className={`notes-btn${theme==="light"?"":"-dark"}${switchContent==="yourNotes"?"-active":""}`} onClick={() => {ChangeContent(1)}}>Back</button>
+          <AddNote/>
+        </div>
       }
     </div>
   )

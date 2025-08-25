@@ -16,7 +16,7 @@ export default function Tracker() {
   
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
-      This is tracker page.
+      WIP
     </div>
   )
 }

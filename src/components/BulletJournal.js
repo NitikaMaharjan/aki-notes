@@ -16,7 +16,7 @@ export default function BulletJournal() {
   
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
-      This is bullet journal page.
+      WIP
     </div>
   )
 }

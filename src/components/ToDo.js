@@ -16,7 +16,7 @@ export default function ToDo() {
   
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
-      This is to do lists page.
+      WIP
     </div>
   )
 }

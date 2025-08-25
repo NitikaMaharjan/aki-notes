@@ -57,10 +57,10 @@ export default function Note() {
     return (
         <>  
             {notes.length === 0?
-                <p style={{margin: "24px 0px 0px 0px",padding: "0px", textAlign: "center", color: `${theme==="light"?"#5e5959":"rgb(200, 200, 200)"}`}}>Want to share a quick thought? Tap 'Add Note' to get started!</p>
+                <p style={{margin: "0px",padding: "0px", textAlign: "center", color: `${theme==="light"?"#5e5959":"rgb(200, 200, 200)"}`}}>Want to share a quick thought? Tap 'Add Note' to get started!</p>
             :
                 <>
-                    <h5 style={{margin: "24px 0px 0px 0px",padding: "0px", textAlign: "center"}}>Your Notes</h5>
+                    <h5 style={{margin: "0px",padding: "0px", textAlign: "center"}}>Your Notes</h5>
                     <div className="notes-collection">
                         {notes.map((note)=>{
                             return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>

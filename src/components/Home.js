@@ -16,7 +16,7 @@ export default function Home() {
   
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
-      This is home page.
+      WIP
     </div>
   )
 }
