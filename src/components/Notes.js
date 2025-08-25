@@ -37,11 +37,11 @@ export default function Notes() {
       {switchContent==="yourNotes"?
         <div>
           <ShowNote/>
-          <button className="add-note-btn" onClick={() => {ChangeContent(2)}} style={{position: "fixed", bottom: "32px", right: "36px", zIndex: "1"}}>+ Add Note</button>
+          <button className="add-btn" onClick={() => {ChangeContent(2)}}><img src="/icons/add.png" height="14px" width="14px"/>&nbsp;Add Note</button>
         </div>
       : 
         <div>
-          <button className={`notes-btn${theme==="light"?"":"-dark"}${switchContent==="yourNotes"?"-active":""}`} onClick={() => {ChangeContent(1)}}>Back</button>
+          <button className={`notes-btn${theme==="light"?"":"-dark"}`} onClick={() => {ChangeContent(1)}}>Back</button>
           <AddNote/>
         </div>
       }

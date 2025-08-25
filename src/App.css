@@ -4,7 +4,7 @@
     width: 80%;
     height: 84px;
     position: fixed;
-    margin: 0px 24px 24px 250px;
+    margin: 0px 24px 24px 244px;
     padding: 0px;
     z-index: 1;
 }
@@ -160,7 +160,7 @@
 .content{
     width: 75%;
     margin-top: 100px;
-    margin-left: 274px;
+    margin-left: 280px;
 }
 
 /* notes page */
@@ -173,7 +173,7 @@
 }
 
 /* notes page "your notes" and "add notes" buttons*/
-.notes-btn, .notes-btn-active, .notes-btn-dark, .notes-btn-dark-active{
+.notes-btn, .notes-btn-dark{
     padding: 4px 10px;
     border-radius: 8px;
     font-size: 15px;
@@ -183,11 +183,6 @@
     border: 1px solid rgba(0, 0, 0, 0.15);
     background-color: white;    
     color: #5e5959;
-}
-
-.notes-btn-active, .notes-btn-dark-active{
-    border: 1px solid #ffcece;
-    background-color: #ffcece;
 }
 
 .notes-btn-dark{
@@ -241,4 +236,20 @@
 .add-note-btn:hover{
     border: 1px solid #ffa8a8;
     background-color: #ffa8a8;
+}
+
+.add-btn{
+    display: flex;
+    align-items: center;
+    position: fixed;
+    bottom: 32px;
+    right: 36px;
+    z-index: 1;
+    padding: 6px 12px;
+    font-size: 16px;
+    background-color: #ffa8a8;
+    border: 1px solid #ffa8a8;
+    cursor: pointer;
+    border-radius: 24px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
 }
