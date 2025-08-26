@@ -33,11 +33,11 @@ export default function Notes() {
   }
   
   return (
-    <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
+    <div className="content" style={{color: `${theme==="light"?"black":"white"}`, padding: `0px ${switchContent==="yourNotes"?"24px":"0px"}`}}>
       {switchContent==="yourNotes"?
         <div>
           <ShowNote/>
-          <button className="add-btn" onClick={() => {ChangeContent(2)}}><img src="/icons/add.png" height="14px" width="14px"/>&nbsp;Add Note</button>
+          <button className="add-btn" onClick={() => {ChangeContent(2)}}><img src="/icons/add.png" height="12px" width="12px"/>&nbsp;&nbsp;Add Note</button>
         </div>
       : 
         <div>
