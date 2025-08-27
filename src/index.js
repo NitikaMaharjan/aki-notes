@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import Cursor from './components/Cursor';
 import reportWebVitals from './reportWebVitals';
 import ThemeState from './context/theme/ThemeState';
 
@@ -11,6 +12,7 @@ root.render(
   <React.StrictMode>
     <ThemeState>
       <App/>
+      <Cursor/>
     </ThemeState>
   </React.StrictMode>
 );
