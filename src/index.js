@@ -2,18 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import Cursor from './components/Cursor';
 import reportWebVitals from './reportWebVitals';
+import CursorState from './context/cursor/CursorState';
 import ThemeState from './context/theme/ThemeState';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <React.StrictMode>
-    <ThemeState>
-      <App/>
-      <Cursor/>
-    </ThemeState>
+    <CursorState>
+      <ThemeState>
+        <App/>
+      </ThemeState>
+    </CursorState>
   </React.StrictMode>
 );
 

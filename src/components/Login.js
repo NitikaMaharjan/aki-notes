@@ -1,16 +1,18 @@
-import React,  { useState, useContext } from 'react';
+import React,  { useState, useContext, useEffect } from 'react';
+import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from "../context/theme/ThemeContext";
 import { useNavigate } from "react-router";
 import UserContext from '../context/user/UserContext';
 
 export default function Login() {
+  const {cursorDot, cursorOutline, getCursor} = useContext(CursorContext);
   const {theme} = useContext(ThemeContext);
   const {fetchUserInfo} = useContext(UserContext);
-  let navigate = useNavigate();
   const [credentials, setCredentials] = useState({
     email: "",
     password: ""
   });
+  let navigate = useNavigate();
 
   const handleChange = (e) =>{
     setCredentials({...credentials, [e.target.name]: e.target.value});
@@ -37,6 +39,26 @@ export default function Login() {
     }
   }
 
+  useEffect(() => {
+    getCursor();
+    // eslint-disable-next-line
+  }, []);
+  
+
+  const handleCursorEnter = () =>{
+    if (cursorDot && cursorOutline){
+      cursorDot.style.backgroundColor = "white";
+      cursorOutline.style.border = "2px solid white";
+    }
+  }
+  
+  const handleCursorLeave = () =>{
+    if (cursorDot && cursorOutline){
+      cursorDot.style.backgroundColor = "#ffa8a8";
+      cursorOutline.style.border = "2px solid #ffa8a8";
+    }
+  }
+
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
       <h5 style={{textAlign: "center"}}>Welcome Back!</h5>
@@ -52,7 +74,7 @@ export default function Login() {
                 <input type="password" className="form-control" id="password" name="password" placeholder="Enter password" onChange={handleChange} autoComplete="true"/>
             </div>
             <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
-                <button type="submit" className="add-note-btn" onClick={handleSubmit}>Log in</button>
+                <button type="submit" className="add-note-btn" onClick={handleSubmit} onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>Log in</button>
             </div>
           </form>
         </div>
