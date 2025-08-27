@@ -57,7 +57,7 @@ export default function Note() {
     return (
         <>  
             {notes.length === 0?
-                <p style={{margin: "32px 0px 0px 0px",padding: "0px", textAlign: "center", color: `${theme==="light"?"#5e5959":"rgb(200, 200, 200)"}`}}>Want to share a quick thought? Tap on 'Add Note' to get started!</p>
+                <p style={{margin: "0px",padding: "40px 0px 0px 0px", textAlign: "center", color: `${theme==="light"?"#5e5959":"rgb(200, 200, 200)"}`}}>Want to share a quick thought? Tap on 'Add Note' to get started!</p>
             :
                 <>
                     <h5 style={{margin: "0px",padding: "0px", textAlign: "center"}}>Your Notes</h5>
