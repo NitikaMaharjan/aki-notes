@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from '../context/theme/ThemeContext';
 import TextContext from '../context/text/TextContext';
 import NoteContext from "../context/notes/NoteContext";
@@ -6,6 +7,7 @@ import NoteItem from './NoteItem';
 
 export default function Note() {
     
+    const {handleCursorEnter, handleCursorLeave} = useContext(CursorContext);
     const {theme} = useContext(ThemeContext);
     const {handleCapitalizeFirstLetter, giveMeDay, giveMeTime, calculateCharacters, calculateWords} = useContext(TextContext);
     const {notes, fetchNote, deleteNote, editNote} = useContext(NoteContext);
@@ -117,7 +119,7 @@ export default function Note() {
                             <textarea className="form-control" id="description" name="description" value={selectedNote.description} placeholder="Enter description" rows="3" onChange={handleChange} autoComplete="true"></textarea>                          
                         </div>                       
                         <div className="modal-body" style={{display: "flex", justifyContent: "center", paddingTop: "4px"}}>
-                            <button className="add-note-btn" onClick={handleSubmit}>Edit Note</button>
+                            <button className="add-note-btn" onClick={handleSubmit} onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>Edit Note</button>
                         </div>                       
                     </div>
                 </div>

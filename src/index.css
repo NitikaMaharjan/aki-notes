@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  cursor: none;
 }
 
 code {
@@ -30,7 +31,7 @@ code {
   left: 0;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1;
+  z-index: 1056;
   pointer-events: none;
 }
 

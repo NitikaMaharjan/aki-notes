@@ -10,7 +10,7 @@
 }
 
 .login-btn{
-    padding: 4px 10px;
+    padding: 4px 16px;
     font-size: 15px;
     border: none;
     background-color: transparent;
@@ -20,10 +20,11 @@
 
 .login-btn:hover{
     color: #5e5959;
+    cursor: none;
 }
 
 .signup-btn{
-    padding: 4px 10px;
+    padding: 4px 16px;
     border-radius: 8px;
     font-size: 15px;
     border: 1px solid black;
@@ -35,10 +36,11 @@
 .signup-btn:hover{
     border: 1px solid #5e5959;
     color: #5e5959;
+    cursor: none;
 }
 
 .login-btn-dark{
-    padding: 4px 10px;
+    padding: 4px 16px;
     font-size: 15px;
     border: none;
     background-color: transparent;
@@ -48,10 +50,11 @@
 
 .login-btn-dark:hover{
     color: rgb(200, 200, 200);
+    cursor: none;
 }
 
 .signup-btn-dark{
-    padding: 4px 10px;
+    padding: 4px 16px;
     border-radius: 8px;
     font-size: 15px;
     border: 1px solid white;
@@ -63,6 +66,7 @@
 .signup-btn-dark:hover{
     border: 1px solid rgb(200, 200, 200);
     color: rgb(200, 200, 200);
+    cursor: none;
 }
 
 .theme-icon-wrapper-light, .theme-icon-wrapper-dark{
@@ -72,15 +76,16 @@
     border-radius: 25px;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
 }
 
 .theme-icon-wrapper-light:hover{
     background-color: rgba(128, 128, 128, 0.300);
+    cursor: none;
 }
 
 .theme-icon-wrapper-dark:hover{
     background-color: rgb(56, 64, 66);
+    cursor: none;
 }
 
 .side-navbar{
@@ -97,8 +102,12 @@
     padding: 4px 0px 4px 18px;
 }
 
-.navbar-link-div:hover, .navbar-link-dark-div:hover{
-    transform: scale(1.02);
+.navbar-link-div:hover{
+    color: #ffa8a8;
+}
+
+.navbar-link-dark-div:hover{
+    color: #ffcece;
 }
 
 .navbar-link-div-active{
@@ -156,6 +165,10 @@
     text-decoration: none;
 }
 
+.navbar-link:hover, .navbar-link-dark:hover, .navbar-link-active:hover, .navbar-link-dark-active:hover, .navbar-link-div:hover, .navbar-link-dark-div:hover, .navbar-link-div-active:hover, .navbar-link-dark-div-active:hover{
+    cursor: none;
+}
+
 /* content */
 .content{
     width: 80%;
@@ -173,19 +186,23 @@
 }
 
 /* notes page "your notes" and "add notes" buttons*/
-.notes-btn, .notes-btn-dark{
-    padding: 4px 10px;
+.back-btn, .back-btn-dark{
+    padding: 4px 20px;
     border-radius: 8px;
     font-size: 15px;
 }
 
-.notes-btn{
+.back-btn:hover, .back-btn-dark:hover{
+    cursor: none;
+}
+
+.back-btn{
     border: 1px solid rgba(0, 0, 0, 0.15);
     background-color: white;    
     color: #5e5959;
 }
 
-.notes-btn-dark{
+.back-btn-dark{
     border: 1px solid #424549;
     background-color: #212529;    
     color: #bebebeff;
@@ -199,7 +216,6 @@
     padding: 0px;
     height: 40px;
     width: 40px;
-    cursor: pointer;
 }
 
 .modal-btn img{
@@ -209,6 +225,7 @@
 
 .modal-btn:hover{
     background-color: rgba(128, 128, 128, 0.300);
+    cursor: none;
 }
 
 /* add notes page */
@@ -224,7 +241,7 @@
 }
 
 .add-note-btn{
-    padding: 4px 10px;
+    padding: 4px 20px;
     border-radius: 24px;
     font-size: 15px;
     border: 1px solid #ffcece;
@@ -236,6 +253,7 @@
 .add-note-btn:hover{
     border: 1px solid #ffa8a8;
     background-color: #ffa8a8;
+    cursor: none;
 }
 
 .add-btn{
@@ -245,11 +263,17 @@
     bottom: 40px;
     right: 40px;
     z-index: 1;
-    padding: 6px 12px;
+    padding: 6px 20px;
     font-size: 16px;
-    background-color: #ffa8a8;
-    border: 1px solid #ffa8a8;
-    cursor: pointer;
+    border: 1px solid #ffcece;
+    background-color: #ffcece;
     border-radius: 24px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+}
+
+.add-btn:hover{
+    border: 1px solid #ffa8a8;
+    background-color: #ffa8a8;
+    cursor: none;
 }

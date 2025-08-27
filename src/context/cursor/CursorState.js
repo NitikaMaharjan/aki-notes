@@ -18,9 +18,18 @@ export default function CursorState(props) {
         }
     };
 
-    const getCursor = () => {
-        setCursorDot(document.getElementById("dot"));
-        setCursorOutline(document.getElementById("outline"));
+    const handleCursorEnter = () =>{
+        if (cursorDot && cursorOutline){
+            cursorDot.style.backgroundColor = "white";
+            cursorOutline.style.border = "2px solid white";
+        }
+    }
+    
+    const handleCursorLeave = () =>{
+        if (cursorDot && cursorOutline){
+            cursorDot.style.backgroundColor = "#ffa8a8";
+            cursorOutline.style.border = "2px solid #ffa8a8";
+        }
     }
 
     useEffect(() => {
@@ -32,11 +41,12 @@ export default function CursorState(props) {
         return () => {
             window.removeEventListener("mousemove", handleCursor);
         };
+        // eslint-disable-next-line
     }, [cursorDot, cursorOutline]);
 
     return(
         <>
-            <CursorContext.Provider value={{cursorDot, cursorOutline, getCursor}}>
+            <CursorContext.Provider value={{handleCursorEnter, handleCursorLeave}}>
                 {props.children}
             </CursorContext.Provider>
 

@@ -21,7 +21,7 @@ export default function TopNavbar() {
   return (
     <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
       <div>
-          <h5 style={{margin: `${localStorage.getItem("token")?"0px": "0px 72px 0px 0px"}`, padding: "0px", color: `${theme==="light"?"black":"white"}`}}>Hello, {handleCapitalizeFirstLetter(localStorage.getItem("token")?localStorage.getItem("username"):"world")}!</h5>
+          <h5 style={{margin: `${localStorage.getItem("token")?"0px 22px 0px 0px": "0px 102px 0px 0px"}`, padding: "0px", color: `${theme==="light"?"black":"white"}`}}>Hello, {handleCapitalizeFirstLetter(localStorage.getItem("token")?localStorage.getItem("username"):"world")}!</h5>
       </div>
 
       <div>

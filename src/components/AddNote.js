@@ -1,8 +1,11 @@
 import React, { useState, useContext } from 'react';
+import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from '../context/theme/ThemeContext';
 import NoteContext from '../context/notes/NoteContext';
 
 export default function AddNote() {
+    
+    const {handleCursorEnter, handleCursorLeave} = useContext(CursorContext);
     const {theme} = useContext(ThemeContext);
     const {addNote} = useContext(NoteContext);
     
@@ -40,7 +43,7 @@ export default function AddNote() {
                             <textarea className="form-control" id="description" name="description" placeholder="Enter description" rows="3" onChange={handleChange} autoComplete="true"></textarea>
                         </div>
                         <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
-                            <button type="submit" className="add-note-btn" onClick={handleSubmit}>Add Note</button>
+                            <button type="submit" className="add-note-btn" onClick={handleSubmit} onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>Add Note</button>
                         </div>
                     </form>
                 </div>
