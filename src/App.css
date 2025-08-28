@@ -261,7 +261,7 @@
     align-items: center;
     position: fixed;
     bottom: 40px;
-    right: 40px;
+    right: 484px;
     z-index: 1;
     padding: 6px 20px;
     font-size: 16px;
@@ -273,6 +273,33 @@
 }
 
 .add-btn:hover{
+    border: 1px solid #ffa8a8;
+    background-color: #ffa8a8;
+    cursor: none;
+}
+
+.up-arrow{
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.up-arrow-show{
+    position: fixed;
+    bottom: 36px;
+    right: 36px;
+    padding: 6px 15px;
+    color: black;
+    font-size: 16px;
+    text-decoration: none;
+    border: 1px solid #ffcece;
+    background-color: #ffcece;
+    border-radius: 50%;
+    opacity: 1;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+}
+
+.up-arrow-show:hover{
     border: 1px solid #ffa8a8;
     background-color: #ffa8a8;
     cursor: none;

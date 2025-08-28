@@ -21,6 +21,7 @@ export default function Note() {
         __v: ""
     });
     const [activeModal, setActiveModal] = useState(null);
+    const [scroll, setScroll] = useState(false);
     
     const OpenNoteDetailModal = (note) => {
         setSelectedNote(note);
@@ -37,6 +38,15 @@ export default function Note() {
         if(localStorage.getItem("token")){
             fetchNote();
         }
+
+        window.addEventListener("scroll", () => {
+            if(window.scrollY){
+                setScroll(true);
+            }else{
+                setScroll(false);
+            }
+        });
+
         // eslint-disable-next-line
     }, []);
     
@@ -67,6 +77,9 @@ export default function Note() {
                         {notes.map((note)=>{
                             return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
                         })}
+                    </div>
+                    <div>
+                        <a className={`up-arrow${scroll?"-show":""}`} href="#top" onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>&uarr;</a>
                     </div>
                 </>
             }
