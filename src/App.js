@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useContext } from 'react';
 import ThemeContext from './context/theme/ThemeContext';
+import ProgressState from './context/progress/ProgressState';
 import UserState from './context/user/UserState';
 import TextState from './context/text/TextState';
 import NoteState from "./context/notes/NoteState";
@@ -16,7 +17,6 @@ import Signup from './components/Signup';
 import Login from './components/Login';
 
 function App() {
-
   const {theme} = useContext(ThemeContext);
   document.body.style.backgroundColor= localStorage.getItem("bgColor")?localStorage.getItem("bgColor"):"rgb(247, 247, 247)";
 
@@ -38,31 +38,33 @@ function App() {
 
   return (
     <>
-      <UserState>
-        <TextState>
-          <NoteState>
-            <BrowserRouter>
-              <div style={{display: "flex"}}>
-                <div className="side-navbar">
-                  <SideNavbar/>
+      <ProgressState>
+        <UserState>
+          <TextState>
+            <NoteState>
+              <BrowserRouter>
+                <div style={{display: "flex"}}>
+                  <div className="side-navbar">
+                    <SideNavbar/>
+                  </div>
+                  <div className="top-navbar" style={{backgroundColor: `${theme==="light"?"rgb(247, 247, 247)":"#0e1011"}`}}>
+                    <TopNavbar/>
+                  </div>
                 </div>
-                <div className="top-navbar" style={{backgroundColor: `${theme==="light"?"rgb(247, 247, 247)":"#0e1011"}`}}>
-                  <TopNavbar/>
-                </div>
-              </div>
-              <Routes>
-                <Route path='/' element={<Home/>}/>
-                <Route path='/notes' element={<Notes/>}/>
-                <Route path='/todolists' element={<ToDo/>}/>
-                <Route path='/bulletjournal' element={<BulletJournal/>}/>
-                <Route path='/tracker' element={<Tracker/>}/>
-                <Route path='/signup' element={<Signup/>}/>
-                <Route path='/login' element={<Login/>}/>
-              </Routes>
-            </BrowserRouter>
-          </NoteState>
-        </TextState>
-      </UserState> 
+                <Routes>
+                  <Route path='/' element={<Home/>}/>
+                  <Route path='/notes' element={<Notes/>}/>
+                  <Route path='/todolists' element={<ToDo/>}/>
+                  <Route path='/bulletjournal' element={<BulletJournal/>}/>
+                  <Route path='/tracker' element={<Tracker/>}/>
+                  <Route path='/signup' element={<Signup/>}/>
+                  <Route path='/login' element={<Login/>}/>
+                </Routes>
+              </BrowserRouter>
+            </NoteState>
+          </TextState>
+        </UserState>
+      </ProgressState> 
     </>
   );
 }
