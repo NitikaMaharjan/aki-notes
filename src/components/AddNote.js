@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import ProgressContext from '../context/progress/ProgressContext';
 import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from '../context/theme/ThemeContext';
 import NoteContext from '../context/notes/NoteContext';
 
 export default function AddNote() {
     
+    const {showProgress} = useContext(ProgressContext);
     const {handleCursorEnter, handleCursorLeave} = useContext(CursorContext);
     const {theme} = useContext(ThemeContext);
     const {addNote} = useContext(NoteContext);
@@ -23,6 +25,11 @@ export default function AddNote() {
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
     }
+
+    useEffect(() => {    
+        showProgress();
+        // eslint-disable-next-line
+    }, []);
 
     return (
         <>

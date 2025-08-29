@@ -1,9 +1,12 @@
-import React,  { useState, useContext } from 'react';
+import React,  { useState, useEffect, useContext } from 'react';
+import ProgressContext from '../context/progress/ProgressContext';
 import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from "../context/theme/ThemeContext";
 import { useNavigate } from "react-router";
 
 export default function Signup() {
+  
+  const {showProgress} = useContext(ProgressContext);
   const {handleCursorEnter, handleCursorLeave} = useContext(CursorContext);
   const {theme} = useContext(ThemeContext);
   const [credentials, setCredentials] = useState({
@@ -35,6 +38,11 @@ export default function Signup() {
         alert("Invalid credentials");
     }
   }
+
+  useEffect(() => {    
+    showProgress();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>

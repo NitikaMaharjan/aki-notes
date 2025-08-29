@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import ProgressContext from '../context/progress/ProgressContext';
 import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from '../context/theme/ThemeContext';
 import TextContext from '../context/text/TextContext';
@@ -7,6 +8,7 @@ import NoteItem from './NoteItem';
 
 export default function Note() {
     
+    const {showProgress} = useContext(ProgressContext);
     const {handleCursorEnter, handleCursorLeave} = useContext(CursorContext);
     const {theme} = useContext(ThemeContext);
     const {handleCapitalizeFirstLetter, giveMeDay, giveMeTime, calculateCharacters, calculateWords} = useContext(TextContext);
@@ -53,7 +55,10 @@ export default function Note() {
     useEffect(() => {
         if(activeModal!=null){
             activeModal.show();
+        }else{
+            showProgress();
         }
+        // eslint-disable-next-line
     }, [activeModal]);
 
     const handleChange = (e) =>{
