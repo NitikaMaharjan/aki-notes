@@ -1,13 +1,14 @@
-import React,  { useEffect, useContext } from 'react';
-import ProgressContext from '../context/progress/ProgressContext';
-import ThemeContext from "../context/theme/ThemeContext";
+import  { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router';
+import ThemeContext from "../context/theme/ThemeContext";
+import ProgressContext from '../context/progress/ProgressContext';
 
 export default function BulletJournal() {
 
-  const {showProgress} = useContext(ProgressContext);
-  const {theme} = useContext(ThemeContext);
   let navigate = useNavigate();
+  
+  const {theme} = useContext(ThemeContext);
+  const {showProgress} = useContext(ProgressContext);
 
   useEffect(() => {
     showProgress();

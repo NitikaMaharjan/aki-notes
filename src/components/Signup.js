@@ -1,21 +1,25 @@
-import React,  { useState, useEffect, useContext } from 'react';
-import ProgressContext from '../context/progress/ProgressContext';
+import  { useState, useEffect, useContext } from 'react';
+import { useNavigate } from "react-router";
 import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from "../context/theme/ThemeContext";
-import { useNavigate } from "react-router";
+import ProgressContext from '../context/progress/ProgressContext';
+import AlertContext from '../context/alert/AlertContext';
 
 export default function Signup() {
   
-  const {showProgress} = useContext(ProgressContext);
+  let navigate = useNavigate();
+  
   const {handleCursorEnter, handleCursorLeave} = useContext(CursorContext);
   const {theme} = useContext(ThemeContext);
+  const {showProgress} = useContext(ProgressContext);
+  const {showAlert} = useContext(AlertContext);
+
   const [credentials, setCredentials] = useState({
     name: "",
     email: "",
     password: "",
     confirm_password: ""
   });
-  let navigate = useNavigate();
 
   const handleChange = (e) =>{
     setCredentials({...credentials, [e.target.name]: e.target.value});
@@ -34,6 +38,7 @@ export default function Signup() {
     if (json.success){
         handleCursorLeave();
         navigate("/login");
+        showAlert();
     }
     else{
         alert("Invalid credentials");

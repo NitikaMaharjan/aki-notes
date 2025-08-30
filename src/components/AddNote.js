@@ -1,14 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react';
-import ProgressContext from '../context/progress/ProgressContext';
+import { useState, useEffect, useContext } from 'react';
 import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from '../context/theme/ThemeContext';
+import ProgressContext from '../context/progress/ProgressContext';
+import AlertContext from '../context/alert/AlertContext';
 import NoteContext from '../context/notes/NoteContext';
 
 export default function AddNote(props) {
     
-    const {showProgress} = useContext(ProgressContext);
     const {handleCursorEnter, handleCursorLeave} = useContext(CursorContext);
     const {theme} = useContext(ThemeContext);
+    const {showProgress} = useContext(ProgressContext);
+    const {showAlert} = useContext(AlertContext);
     const {addNote} = useContext(NoteContext);
     
     const [note, setNote] = useState({
@@ -26,6 +28,7 @@ export default function AddNote(props) {
         addNote(note.title, note.description, note.tag);
         handleCursorLeave();
         props.ChangeContent(1);
+        showAlert();
     }
 
     useEffect(() => {    

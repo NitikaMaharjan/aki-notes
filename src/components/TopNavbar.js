@@ -1,14 +1,16 @@
-import React, { useContext }from 'react';
+import { useContext }from 'react';
 import { Link, useNavigate } from "react-router";
 import ThemeContext from '../context/theme/ThemeContext';
+import AlertContext from '../context/alert/AlertContext';
 import TextContext from '../context/text/TextContext';
 
 export default function TopNavbar() {
 
-  const {theme, ChangeTheme} = useContext(ThemeContext);
-  const {handleCapitalizeFirstLetter, giveMeDay, giveMeTime} = useContext(TextContext);
-
   let navigate = useNavigate();
+
+  const {theme, ChangeTheme} = useContext(ThemeContext);
+  const {showAlert} = useContext(AlertContext);
+  const {handleCapitalizeFirstLetter, giveMeDay, giveMeTime} = useContext(TextContext);
   
   const handleLogout = () => {
     localStorage.removeItem("loggedInUsername");
@@ -16,6 +18,7 @@ export default function TopNavbar() {
     localStorage.removeItem("activeContent");
     localStorage.removeItem("token");
     navigate("/login");
+    showAlert();
   }
 
   return (

@@ -1,19 +1,22 @@
-import React, { useState, useEffect, useContext } from 'react';
-import ProgressContext from '../context/progress/ProgressContext';
+import { useState, useEffect, useContext } from 'react';
 import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from '../context/theme/ThemeContext';
+import ProgressContext from '../context/progress/ProgressContext';
+import AlertContext from '../context/alert/AlertContext';
 import TextContext from '../context/text/TextContext';
 import NoteContext from "../context/notes/NoteContext";
-import NoteItem from './NoteItem';
 import Throbber from './Throbber';
+import NoteItem from './NoteItem';
 
 export default function Note() {
-    
-    const {showProgress} = useContext(ProgressContext);
+
     const {handleCursorEnter, handleCursorLeave} = useContext(CursorContext);
     const {theme} = useContext(ThemeContext);
+    const {showProgress} = useContext(ProgressContext);
+    const {showAlert} = useContext(AlertContext);
     const {handleCapitalizeFirstLetter, giveMeDay, giveMeTime, calculateCharacters, calculateWords} = useContext(TextContext);
     const {notes, fetchNote, deleteNote, editNote} = useContext(NoteContext);
+    
     const [selectedNote, setSelectedNote] = useState({
         _id: "",
         user: "",
@@ -37,6 +40,18 @@ export default function Note() {
         const myModal = new window.bootstrap.Modal(document.getElementById("editModal"));
         setActiveModal(myModal);
     };
+
+    const handleChange = (e) =>{
+        setSelectedNote({...selectedNote, [e.target.name]: e.target.value});
+    }
+
+    const handleSubmit = async()=>{
+        await editNote(selectedNote._id, selectedNote.title===""?"Untitled":selectedNote.title, selectedNote.description===""?" ":selectedNote.description, selectedNote.tag===""?"General":selectedNote.tag);
+        await fetchNote();
+        handleCursorLeave();
+        activeModal.hide();
+        showAlert();
+    }
 
     useEffect(() => {
         if(localStorage.getItem("token")){
@@ -65,17 +80,6 @@ export default function Note() {
         }
         // eslint-disable-next-line
     }, [activeModal]);
-
-    const handleChange = (e) =>{
-        setSelectedNote({...selectedNote, [e.target.name]: e.target.value});
-    }
-
-    const handleSubmit = async()=>{
-        await editNote(selectedNote._id, selectedNote.title===""?"Untitled":selectedNote.title, selectedNote.description===""?" ":selectedNote.description, selectedNote.tag===""?"General":selectedNote.tag);
-        await fetchNote();
-        handleCursorLeave();
-        activeModal.hide();
-    }
     
     return (
         <>  
@@ -108,7 +112,7 @@ export default function Note() {
                             <h5 className="modal-title" id="noteDetailModalLabel" style={{color: `${theme==="light"?"black":"white"}`}}>{selectedNote?.title}</h5>
                             <div>
                                 <button className="modal-btn" onClick={()=>{activeModal.hide(); OpenEditModal();}}><img src={`${theme==="light"?"/icons/edit.png":"/icons/edit2.png"}`} alt="edit" title="edit"/></button>
-                                <button className="modal-btn" onClick={()=>{deleteNote(selectedNote?._id); activeModal.hide();}}><img src={`${theme==="light"?"/icons/delete.png":"/icons/delete2.png"}`} alt="edit" title="delete"/></button>
+                                <button className="modal-btn" onClick={()=>{deleteNote(selectedNote?._id); activeModal.hide(); showAlert();}}><img src={`${theme==="light"?"/icons/delete.png":"/icons/delete2.png"}`} alt="edit" title="delete"/></button>
                                 <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} alt="edit" title="close"/></button>
                             </div>
                         </div>

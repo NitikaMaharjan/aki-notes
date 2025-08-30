@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Link, useLocation } from "react-router";
 import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from '../context/theme/ThemeContext';
 
 export default function SideNavbar() {
 
+    const location = useLocation();
+    
     const {handleCursorEnter, handleCursorLeave} = useContext(CursorContext);
     const {theme} = useContext(ThemeContext);
-
-    const location = useLocation();
   
     return (
         <div style={{margin: "24px", padding: "12px", borderRadius: "6px", boxShadow: "0px 2px 5px rgba(0, 0, 0, 0.15)", backgroundColor: `${theme==="light"?"white":"#212529"}`, border: `${theme==="light"?"1px solid rgba(0, 0, 0, 0.15)":"1px solid #424549"}`}}>
