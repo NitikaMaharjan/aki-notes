@@ -5,6 +5,7 @@ import ThemeContext from '../context/theme/ThemeContext';
 import TextContext from '../context/text/TextContext';
 import NoteContext from "../context/notes/NoteContext";
 import NoteItem from './NoteItem';
+import Throbber from './Throbber';
 
 export default function Note() {
     
@@ -24,6 +25,7 @@ export default function Note() {
     });
     const [activeModal, setActiveModal] = useState(null);
     const [scroll, setScroll] = useState(false);
+    const [loading, setLoading] = useState(true);
     
     const OpenNoteDetailModal = (note) => {
         setSelectedNote(note);
@@ -57,6 +59,9 @@ export default function Note() {
             activeModal.show();
         }else{
             showProgress();
+            setTimeout(() => {
+                setLoading(false);
+            }, 1000);
         }
         // eslint-disable-next-line
     }, [activeModal]);
@@ -68,6 +73,7 @@ export default function Note() {
     const handleSubmit = async()=>{
         await editNote(selectedNote._id, selectedNote.title===""?"Untitled":selectedNote.title, selectedNote.description===""?" ":selectedNote.description, selectedNote.tag===""?"General":selectedNote.tag);
         await fetchNote();
+        handleCursorLeave();
         activeModal.hide();
     }
     
@@ -78,14 +84,20 @@ export default function Note() {
             :
                 <>
                     <h5 style={{margin: "0px",padding: "0px", textAlign: "center"}}>Your Notes</h5>
-                    <div className="notes-collection">
-                        {notes.map((note)=>{
-                            return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
-                        })}
-                    </div>
-                    <div>
-                        <a className={`up-arrow${scroll?"-show":""}`} href="#top" onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>&uarr;</a>
-                    </div>
+                    {loading?
+                        <Throbber/>
+                    :
+                    <>
+                        <div className="notes-collection">
+                            {notes.map((note)=>{
+                                return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
+                            })}
+                        </div>
+                        <div>
+                            <a className={`up-arrow${scroll?"-show":""}`} href="#top" onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>&uarr;</a>
+                        </div>
+                    </>
+                    }
                 </>
             }
 

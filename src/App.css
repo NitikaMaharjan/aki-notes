@@ -260,8 +260,8 @@
     display: flex;
     align-items: center;
     position: fixed;
-    bottom: 40px;
-    right: 484px;
+    bottom: 32px;
+    right: 490px;
     z-index: 1;
     padding: 6px 20px;
     font-size: 16px;
@@ -285,7 +285,7 @@
 
 .up-arrow-show{
     position: fixed;
-    bottom: 36px;
+    bottom: 32px;
     right: 36px;
     padding: 6px 15px;
     color: black;

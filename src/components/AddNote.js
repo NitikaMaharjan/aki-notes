@@ -4,7 +4,7 @@ import CursorContext from "../context/cursor/CursorContext";
 import ThemeContext from '../context/theme/ThemeContext';
 import NoteContext from '../context/notes/NoteContext';
 
-export default function AddNote() {
+export default function AddNote(props) {
     
     const {showProgress} = useContext(ProgressContext);
     const {handleCursorEnter, handleCursorLeave} = useContext(CursorContext);
@@ -24,6 +24,8 @@ export default function AddNote() {
     const handleSubmit = (e) =>{
         e.preventDefault();
         addNote(note.title, note.description, note.tag);
+        handleCursorLeave();
+        props.ChangeContent(1);
     }
 
     useEffect(() => {    

@@ -32,6 +32,7 @@ export default function Signup() {
     });
     const json = await response.json();
     if (json.success){
+        handleCursorLeave();
         navigate("/login");
     }
     else{

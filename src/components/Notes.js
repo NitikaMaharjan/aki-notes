@@ -44,7 +44,7 @@ export default function Notes() {
       : 
         <div>
           <button className={`back-btn${theme==="light"?"":"-dark"}`} onClick={() => {ChangeContent(1)}}>Back</button>
-          <AddNote/>
+          <AddNote ChangeContent={ChangeContent}/>
         </div>
       }
     </div>

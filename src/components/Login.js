@@ -34,6 +34,7 @@ export default function Login() {
         // Saving the auth token and redirect to home
         localStorage.setItem("token", json.authtoken); 
         await fetchUserInfo();
+        handleCursorLeave();
         navigate("/");
     }
     else{
