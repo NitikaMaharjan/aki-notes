@@ -10,7 +10,7 @@ export default function AlertState(props) {
 
         setTimeout(() => {
             setAlert(false);
-        }, 5000);
+        }, 2000);
     }
 
     return(
@@ -18,11 +18,16 @@ export default function AlertState(props) {
             <AlertContext.Provider value={{showAlert}}>
                 {props.children}
             </AlertContext.Provider>
-            {
-                alert &&
 
-                <div class="alert alert-primary" role="alert">
-                    This is a primary alert—check it out!
+            {
+                alert 
+                
+                &&
+
+                <div className="alert-box">
+                    <div className="alert-content">
+                        <p className="m-0 p-0">YOLO</p>
+                    </div>
                 </div>
             }
         </>
