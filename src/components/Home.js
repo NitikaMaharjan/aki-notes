@@ -2,6 +2,7 @@ import  { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router';
 import ThemeContext from "../context/theme/ThemeContext";
 import ProgressContext from '../context/progress/ProgressContext';
+import TextContext from '../context/text/TextContext';
 
 export default function Home() {
 
@@ -9,6 +10,7 @@ export default function Home() {
   
   const {theme} = useContext(ThemeContext);
   const {showProgress} = useContext(ProgressContext);
+  const {handleCapitalizeFirstLetter} = useContext(TextContext);
 
   useEffect(() => {
     showProgress();
@@ -20,7 +22,7 @@ export default function Home() {
   
   return (
     <div className="content" style={{color: `${theme==="light"?"black":"white"}`}}>
-      WIP
+      <p style={{margin: "0px", padding: "0px"}}>Hello, {handleCapitalizeFirstLetter(localStorage.getItem("token")?localStorage.getItem("username"):"world")}!</p>
     </div>
   )
 }

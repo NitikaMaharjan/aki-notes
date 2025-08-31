@@ -5,7 +5,7 @@
     height: 84px;
     position: fixed;
     margin: 0px 0px 0px 252px;
-    padding: 0px;
+    padding: 12px 0px 0px 0px;
     z-index: 1;
 }
 
@@ -315,11 +315,15 @@
 }
 
 .alert-content{
+    display: flex;
+    align-items: center;
     background-color: white;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 6px;
-    width: 202px;
-    margin: 280px 0px 0px 24px;
-    padding: 8px;
+    width: max-content;
+    height: 48px;
+    margin-left: 680px;
+    margin-top: 26px;
+    padding: 0px 18px;
 }

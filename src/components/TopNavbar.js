@@ -18,17 +18,13 @@ export default function TopNavbar() {
     localStorage.removeItem("activeContent");
     localStorage.removeItem("token");
     navigate("/login");
-    showAlert();
+    showAlert("Logged out successfully!");
   }
 
   return (
     <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between"}}>
       <div>
-          <h5 style={{margin: "0px", padding: "0px", color: `${theme==="light"?"black":"white"}`}}>Hello, {handleCapitalizeFirstLetter(localStorage.getItem("token")?localStorage.getItem("username"):"world")}!</h5>
-      </div>
-
-      <div>
-        <h6 style={{margin: "0px", padding: "0px", color: `${theme==="light"?"#212529bf":"#b8b8b8ff"}`}}>{giveMeDay(new Date())} | {giveMeTime(new Date())}</h6>
+        <h6 style={{margin: "0px", padding: "0px", color: `${theme==="light"?"black":"white"}`}}>{giveMeDay(new Date())} | {giveMeTime(new Date())}</h6>
       </div>
 
       <div style={{display: "flex", alignItems: "center", gap: "8px"}}>

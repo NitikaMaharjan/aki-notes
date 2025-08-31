@@ -38,7 +38,7 @@ export default function Signup() {
     if (json.success){
         handleCursorLeave();
         navigate("/login");
-        showAlert();
+        showAlert("Signed up successfully!");
     }
     else{
         alert("Invalid credentials");

@@ -41,7 +41,7 @@ export default function Login() {
         await fetchUserInfo();
         handleCursorLeave();
         navigate("/");
-        showAlert();
+        showAlert("Logged in successfully!");
     }
     else{
         alert("Invalid credentials");
