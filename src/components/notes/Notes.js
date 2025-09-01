@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router';
-import CursorContext from "../context/cursor/CursorContext";
-import ThemeContext from "../context/theme/ThemeContext";
+import CursorContext from "../../context/cursor/CursorContext";
+import ThemeContext from "../../context/theme/ThemeContext";
 import ShowNote from './ShowNote';
 import AddNote from './AddNote';
 

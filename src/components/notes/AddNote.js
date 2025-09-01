@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
-import CursorContext from "../context/cursor/CursorContext";
-import ThemeContext from '../context/theme/ThemeContext';
-import ProgressContext from '../context/progress/ProgressContext';
-import AlertContext from '../context/alert/AlertContext';
-import NoteContext from '../context/notes/NoteContext';
+import CursorContext from "../../context/cursor/CursorContext";
+import ThemeContext from '../../context/theme/ThemeContext';
+import ProgressContext from '../../context/progress/ProgressContext';
+import AlertContext from '../../context/alert/AlertContext';
+import NoteContext from '../../context/notes/NoteContext';
 
 export default function AddNote(props) {
     
@@ -28,7 +28,7 @@ export default function AddNote(props) {
         addNote(note.title, note.description, note.tag);
         handleCursorLeave();
         props.ChangeContent(1);
-        showAlert("Note added successfully!");
+        showAlert("New note added!");
     }
 
     useEffect(() => {    

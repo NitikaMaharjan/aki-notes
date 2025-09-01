@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
-import CursorContext from "../context/cursor/CursorContext";
-import ThemeContext from '../context/theme/ThemeContext';
-import ProgressContext from '../context/progress/ProgressContext';
-import AlertContext from '../context/alert/AlertContext';
-import TextContext from '../context/text/TextContext';
-import NoteContext from "../context/notes/NoteContext";
-import Throbber from './Throbber';
+import CursorContext from "../../context/cursor/CursorContext";
+import ThemeContext from '../../context/theme/ThemeContext';
+import ProgressContext from '../../context/progress/ProgressContext';
+import AlertContext from '../../context/alert/AlertContext';
+import TextContext from '../../context/text/TextContext';
+import NoteContext from "../../context/notes/NoteContext";
+import Throbber from '../Throbber';
 import NoteItem from './NoteItem';
 
 export default function Note() {
@@ -50,7 +50,7 @@ export default function Note() {
         await fetchNote();
         handleCursorLeave();
         activeModal.hide();
-        showAlert("Note edited successfully!");
+        showAlert("Changes saved!");
     }
 
     useEffect(() => {

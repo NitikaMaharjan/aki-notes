@@ -1,9 +1,9 @@
 import  { useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router';
-import ThemeContext from "../context/theme/ThemeContext";
-import ProgressContext from '../context/progress/ProgressContext';
+import ThemeContext from "../../context/theme/ThemeContext";
+import ProgressContext from '../../context/progress/ProgressContext';
 
-export default function BulletJournal() {
+export default function ToDo() {
 
   let navigate = useNavigate();
   

@@ -306,10 +306,12 @@
 }
 
 .alert-box{
+    display: flex;
+    justify-content: center;
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: 250px;
+    width: 80%;
     height: 100%;
     z-index: 1055;
 }
@@ -323,7 +325,6 @@
     border-radius: 6px;
     width: max-content;
     height: 48px;
-    margin-left: 680px;
     margin-top: 26px;
     padding: 0px 18px;
 }

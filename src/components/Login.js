@@ -5,6 +5,7 @@ import ThemeContext from "../context/theme/ThemeContext";
 import ProgressContext from '../context/progress/ProgressContext';
 import AlertContext from '../context/alert/AlertContext';
 import UserContext from '../context/user/UserContext';
+import TextContext from '../context/text/TextContext';
 
 export default function Login() {
 
@@ -15,6 +16,7 @@ export default function Login() {
   const {showProgress} = useContext(ProgressContext);
   const {showAlert} = useContext(AlertContext);
   const {fetchUserInfo} = useContext(UserContext);
+  const {handleCapitalizeFirstLetter} = useContext(TextContext);
   
   const [credentials, setCredentials] = useState({
     email: "",
@@ -41,7 +43,7 @@ export default function Login() {
         await fetchUserInfo();
         handleCursorLeave();
         navigate("/");
-        showAlert("Logged in successfully!");
+        showAlert("Welcome back, " + handleCapitalizeFirstLetter(localStorage.getItem("username")) + "!");
     }
     else{
         alert("Invalid credentials");

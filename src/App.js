@@ -1,19 +1,19 @@
 import './App.css';
 import { useContext } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router";
 import ThemeContext from './context/theme/ThemeContext';
 import ProgressState from './context/progress/ProgressState';
 import AlertState from './context/alert/AlertState';
 import UserState from './context/user/UserState';
 import TextState from './context/text/TextState';
 import NoteState from "./context/notes/NoteState";
-import { BrowserRouter, Routes, Route } from "react-router";
-import SideNavbar from './components/SideNavbar';
-import TopNavbar from './components/TopNavbar';
-import Home from './components/Home';
-import Notes from './components/Notes';
-import ToDo from './components/ToDo';
-import BulletJournal from './components/BulletJournal';
-import Tracker from './components/Tracker';
+import SideNavbar from './components/navbar/SideNavbar';
+import TopNavbar from './components/navbar/TopNavbar';
+import Home from './components/home/Home';
+import Notes from './components/notes/Notes';
+import ToDo from './components/todo/ToDo';
+import BulletJournal from './components/bulletjournal/BulletJournal';
+import Tracker from './components/tracker/Tracker';
 import Login from './components/Login';
 import Signup from './components/Signup';
 
