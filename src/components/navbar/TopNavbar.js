@@ -13,12 +13,15 @@ export default function TopNavbar() {
   const {giveMeDay, giveMeTime} = useContext(TextContext);
   
   const handleLogout = () => {
-    localStorage.removeItem("loggedInUsername");
-    localStorage.removeItem("username");
-    localStorage.removeItem("activeContent");
-    localStorage.removeItem("token");
-    navigate("/login");
-    showAlert("1", "You've logged out. See you next time!");
+    let ans = window.confirm("Are you sure?");
+    if (ans) {
+      localStorage.removeItem("loggedInUsername");
+      localStorage.removeItem("username");
+      localStorage.removeItem("activeContent");
+      localStorage.removeItem("token");
+      navigate("/login");
+      showAlert("1", "You've logged out. See you next time!");
+    }
   }
 
   return (
