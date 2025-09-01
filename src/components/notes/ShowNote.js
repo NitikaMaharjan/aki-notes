@@ -29,6 +29,8 @@ export default function Note() {
     const [activeModal, setActiveModal] = useState(null);
     const [scroll, setScroll] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [keyword, setKeyword] = useState("");
+    const [filterednotes, setFilteredNotes] = useState([]);
     
     const OpenNoteDetailModal = (note) => {
         setSelectedNote(note);
@@ -59,6 +61,14 @@ export default function Note() {
             deleteNote(id); 
             activeModal.hide(); 
             showAlert("1", "Note deleted successfully!");
+        }
+    }
+
+    const handleKeywordChange = (e) =>{
+        setKeyword(e.target.value);
+        
+        if(keyword.trim() !== ""){
+            setFilteredNotes(notes.filter((note)=>{return note.title.toLowerCase().includes(keyword.toLowerCase()) || note.tag.toLowerCase().includes(keyword.toLowerCase()) || note.description.toLowerCase().includes(keyword.toLowerCase())}));
         }
     }
 
@@ -96,13 +106,17 @@ export default function Note() {
                 <p style={{margin: "0px",padding: "40px 0px 0px 0px", textAlign: "center", color: `${theme==="light"?"#5e5959":"rgb(200, 200, 200)"}`}}>Want to share a quick thought? Tap on 'Add Note' to get started!</p>
             :
                 <>
-                    <h5 style={{margin: "0px",padding: "0px", textAlign: "center"}}>Your Notes</h5>
+                    <div className="d-flex justify-content-center">
+                        <form style={{width: "60%"}} data-bs-theme={`${theme==="light"?"light":"dark"}`}>
+                            <input className="form-control" type="search" placeholder="Search notes" onChange={handleKeywordChange}/>
+                        </form>
+                    </div>
                     {loading?
                         <Throbber/>
                     :
                     <>
                         <div className="notes-collection">
-                            {notes.map((note)=>{
+                            {(keyword===""?notes:filterednotes).map((note)=>{
                                 return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
                             })}
                         </div>
