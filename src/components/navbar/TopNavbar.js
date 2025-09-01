@@ -18,7 +18,7 @@ export default function TopNavbar() {
     localStorage.removeItem("activeContent");
     localStorage.removeItem("token");
     navigate("/login");
-    showAlert("You've logged out. See you next time!");
+    showAlert("1", "You've logged out. See you next time!");
   }
 
   return (

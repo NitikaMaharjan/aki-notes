@@ -43,10 +43,10 @@ export default function Login() {
         await fetchUserInfo();
         handleCursorLeave();
         navigate("/");
-        showAlert("Welcome back, " + handleCapitalizeFirstLetter(localStorage.getItem("username")) + "!");
+        showAlert("1", "Welcome back, " + handleCapitalizeFirstLetter(localStorage.getItem("username")) + "!");
     }
     else{
-        alert("Invalid credentials");
+        showAlert("0", "Invalid credentials. Please try again!");
     }
   }
 
