@@ -72,6 +72,10 @@ export default function Note() {
         }
     }
 
+    const clearText = () => {
+        setKeyword("");
+    }
+
     useEffect(() => {
         if(localStorage.getItem("token")){
             fetchNote();
@@ -107,8 +111,12 @@ export default function Note() {
             :
                 <>
                     <div className="d-flex justify-content-center">
-                        <form style={{width: "60%"}} data-bs-theme={`${theme==="light"?"light":"dark"}`}>
-                            <input className="form-control" type="search" placeholder="Search notes" onChange={handleKeywordChange}/>
+                        <form>
+                            <div className="d-flex align-items-center" style={{width: "500px", padding: "6px 12px", borderRadius: "6px", backgroundColor: `${theme==="light"?"white":"#212529"}`, border: `${theme==="light"?"1px solid rgba(0, 0, 0, 0.15)":"1px solid #424549"}`}}> 
+                                <img src="/icons/search.png" height="24px" width="24px" alt="search icon"/>&nbsp;&nbsp;
+                                <input className="search-bar-input" placeholder="Search notes" value={keyword} onChange={handleKeywordChange} style={{backgroundColor: `${theme==="light"?"white":"#212529"}`, color: `${theme==="light"?"black":"white"}`}}/>&nbsp;&nbsp;
+                                <img src="/icons/close3.png" height="14px" width="14px" alt="close icon" onClick={clearText} style={{opacity: `${keyword===""?"0":"1"}`}}/>
+                            </div>
                         </form>
                     </div>
                     {loading?
