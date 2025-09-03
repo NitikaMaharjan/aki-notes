@@ -4,12 +4,12 @@ import AlertContext from "./AlertContext";
 export default function AlertState(props) {
 
     const [alert, setAlert] = useState(false);
-    const [img, setImg] = useState("");
+    const [imgSrc, setImgSrc] = useState("");
     const [msg, setMsg] = useState("");
 
-    const showAlert = (state, msg) => {
+    const showAlert = (status, msg) => {
         setAlert(true);
-        setImg(state);
+        setImgSrc(status);
         setMsg(msg);
 
         setTimeout(() => {
@@ -30,7 +30,7 @@ export default function AlertState(props) {
 
                 <div className="alert-box">
                     <div className="alert-content">
-                        <img src={`${img==="1"?"/icons/success.png":"/icons/unsuccess.png"}`} height="28px" width="28px" alt={`${img==="1"?"success":"fail"}`}/>&nbsp;
+                        <img src={`/icons/${imgSrc}.png`} height="28px" width="28px" alt={`${imgSrc} icon`}/>&nbsp;
                         <p className="m-0 p-0" style={{fontSize: "13px", color: "#212529e0"}}>
                             {msg}
                         </p>

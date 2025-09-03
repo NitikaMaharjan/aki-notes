@@ -38,10 +38,10 @@ export default function Signup() {
     if (json.success){
         handleCursorLeave();
         navigate("/login");
-        showAlert("1", "Your account is ready!");
+        showAlert("success", "Your account is ready!");
     }
     else{
-        showAlert("0", "Invalid credentials. Please try again!");
+        showAlert("fail", "Invalid credentials. Please try again!");
     }
   }
 

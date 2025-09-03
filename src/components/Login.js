@@ -27,26 +27,68 @@ export default function Login() {
     setCredentials({...credentials, [e.target.name]: e.target.value});
   }
 
+  const clearText = (input) => {
+    switch (input){
+      case "email":
+        setCredentials({
+          email: "",
+          password: credentials.password
+        });
+        break;
+      case "password":
+        setCredentials({
+          email: credentials.email,
+          password: ""
+        });
+        break;
+      default:
+        setCredentials({
+          email: "",
+          password: ""
+        });
+        break;
+    }
+  }
+
+  const clientSideValidation = () => {
+    if (credentials.email==="" && credentials.password===""){
+      showAlert("warning", "Please enter your credentials to log in!");
+      return false;
+    }else if(credentials.email==="" && credentials.password!==""){
+      showAlert("warning", "Email is required. Please try again!");
+      return false;
+    }else if(credentials.email!=="" && credentials.password===""){
+      showAlert("warning", "Password is required. Please try again!");
+      return false;
+    }else if(!document.getElementById("email").checkValidity()){
+      showAlert("warning", "Please enter a valid email address!");
+      return false;
+    }
+    return true;
+  }
+
   const handleSubmit = async(e) =>{
     e.preventDefault();
-    const response = await fetch("http://localhost:5000/api/auth/login", {
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({email: credentials.email, password: credentials.password})
-    });
-    const json = await response.json();
-    if (json.success){
-        // Saving the auth token and redirect to home
-        localStorage.setItem("token", json.authtoken); 
-        await fetchUserInfo();
-        handleCursorLeave();
-        navigate("/");
-        showAlert("1", "Welcome back, " + handleCapitalizeFirstLetter(localStorage.getItem("username")) + "!");
-    }
-    else{
-        showAlert("0", "Invalid credentials. Please try again!");
+    if(clientSideValidation()){
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({email: credentials.email, password: credentials.password})
+      });
+      const json = await response.json();
+      if (json.success){
+          // Saving the auth token and redirect to home
+          localStorage.setItem("token", json.authtoken); 
+          await fetchUserInfo();
+          handleCursorLeave();
+          navigate("/");
+          showAlert("success", "Welcome back, " + handleCapitalizeFirstLetter(localStorage.getItem("username")) + "!");
+      }
+      else{
+          showAlert("fail", "Invalid credentials. Please try again!");
+      }
     }
   }
 
@@ -63,11 +105,17 @@ export default function Login() {
           <form data-bs-theme={`${theme==="light"?"light":"dark"}`}>
             <div className="form-group mb-1">
                 <label htmlFor="email" className="mb-1" style={{fontWeight: "500"}}>Email</label>
-                <input type="email" className="form-control" id="email" name="email" placeholder="Enter email" onChange={handleChange} autoComplete="true"/>
+                <div className="d-flex align-items-center">
+                  <input type="email" className="form-control" id="email" name="email" placeholder="Enter email" onChange={handleChange} autoComplete="true" value={credentials.email}/>
+                  <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("email");}} style={{margin: "0px 4px 0px 12px", opacity: `${credentials.email===""?"0":"1"}`}}/>
+                </div>
             </div>
             <div className="form-group mb-3">
-                <label htmlFor="password" className="mb-1" style={{fontWeight: "500"}}>Password</label>
-                <input type="password" className="form-control" id="password" name="password" placeholder="Enter password" onChange={handleChange} autoComplete="true"/>
+                <label htmlFor="password" className="mb-1" style={{fontWeight: "500"}} value={credentials.password}>Password</label>
+                <div className="d-flex align-items-center">
+                  <input type="password" className="form-control" id="password" name="password" placeholder="Enter password" onChange={handleChange} autoComplete="true" value={credentials.password}/>
+                  <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("password");}} style={{margin: "0px 4px 0px 12px", opacity: `${credentials.password===""?"0":"1"}`}}/>
+                </div>
             </div>
             <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
                 <button type="submit" className="add-note-btn" onClick={handleSubmit} onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>Log in</button>

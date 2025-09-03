@@ -52,7 +52,7 @@ export default function Note() {
         await fetchNote();
         handleCursorLeave();
         activeModal.hide();
-        showAlert("1", "Changes saved!");
+        showAlert("success", "Changes saved!");
     }
 
     const handleDeleteNote = (id) => {
@@ -60,7 +60,7 @@ export default function Note() {
         if (ans) {
             deleteNote(id); 
             activeModal.hide(); 
-            showAlert("1", "Note deleted successfully!");
+            showAlert("success", "Note deleted successfully!");
         }
     }
 
@@ -142,9 +142,9 @@ export default function Note() {
                         <div className="modal-header d-flex justify-content-between" style={{border: "none"}}>
                             <h5 className="modal-title" id="noteDetailModalLabel" style={{color: `${theme==="light"?"black":"white"}`}}>{selectedNote?.title}</h5>
                             <div>
-                                <button className="modal-btn" onClick={()=>{activeModal.hide(); OpenEditModal();}}><img src={`${theme==="light"?"/icons/edit.png":"/icons/edit2.png"}`} alt="edit" title="edit"/></button>
-                                <button className="modal-btn" onClick={()=>{handleDeleteNote(selectedNote?._id)}}><img src={`${theme==="light"?"/icons/delete.png":"/icons/delete2.png"}`} alt="edit" title="delete"/></button>
-                                <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} alt="edit" title="close"/></button>
+                                <button className="modal-btn" onClick={()=>{activeModal.hide(); OpenEditModal();}}><img src={`${theme==="light"?"/icons/edit.png":"/icons/edit2.png"}`} alt="edit icon" title="edit"/></button>
+                                <button className="modal-btn" onClick={()=>{handleDeleteNote(selectedNote?._id)}}><img src={`${theme==="light"?"/icons/delete.png":"/icons/delete2.png"}`} alt="delete icon" title="delete"/></button>
+                                <button className="modal-btn" data-bs-dismiss="modal" aria-label="Close"><img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} alt="close icon" title="close"/></button>
                             </div>
                         </div>
                         <div style={{display: "flex", alignItems: "center", margin: "0px", padding: "0px 16px"}}>

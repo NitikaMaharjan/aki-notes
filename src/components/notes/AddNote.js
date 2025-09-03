@@ -28,7 +28,7 @@ export default function AddNote(props) {
         addNote(note.title, note.description, note.tag);
         handleCursorLeave();
         props.ChangeContent(1);
-        showAlert("1", "New note added!");
+        showAlert("success", "New note added!");
     }
 
     useEffect(() => {    
