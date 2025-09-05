@@ -173,15 +173,15 @@ export default function Note() {
                         </div>
                         <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
                             <label htmlFor="title" className="mb-1" style={{fontWeight: "500"}}>Title</label>
-                            <input type="text" className="form-control" id="title" name="title" value={selectedNote.title} placeholder="Enter title" onChange={handleChange} autoComplete="true"/>
+                            <input type="text" className="form-control" id="title" name="title" value={selectedNote.title} placeholder="Enter title" onChange={handleChange} autoComplete="on"/>
                         </div>
                         <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
                             <label htmlFor="tag" className="mb-1" style={{fontWeight: "500"}}>Tag</label>
-                            <input type="text" className="form-control" id="tag" name="tag" value={selectedNote.tag} placeholder="Enter tag" onChange={handleChange} autoComplete="true"/>
+                            <input type="text" className="form-control" id="tag" name="tag" value={selectedNote.tag} placeholder="Enter tag" onChange={handleChange} autoComplete="on"/>
                         </div>
                         <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
                             <label htmlFor="description" className="mb-1" style={{fontWeight: "500"}}>Description</label>
-                            <textarea className="form-control" id="description" name="description" value={selectedNote.description} placeholder="Enter description" rows="3" onChange={handleChange} autoComplete="true"></textarea>                          
+                            <textarea className="form-control" id="description" name="description" value={selectedNote.description} placeholder="Enter description" rows="3" onChange={handleChange} autoComplete="on"></textarea>                          
                         </div>                       
                         <div className="modal-body" style={{display: "flex", justifyContent: "center", paddingTop: "4px"}}>
                             <button className="add-note-btn" onClick={handleSubmit} onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>Edit Note</button>

@@ -25,7 +25,7 @@ export default function Login() {
   const [passwordType, setPasswordType] = useState("password");
 
   const handleChange = (e) =>{
-    setCredentials({...credentials, [e.target.name]: e.target.value});
+    setCredentials({...credentials, [e.target.name]: e.target.value.trim()});
   }
 
   const changePasswordType = () => {
@@ -36,27 +36,8 @@ export default function Login() {
     }
   }
 
-  const clearText = (input) => {
-    switch (input){
-      case "email":
-        setCredentials({
-          email: "",
-          password: credentials.password
-        });
-        break;
-      case "password":
-        setCredentials({
-          email: credentials.email,
-          password: ""
-        });
-        break;
-      default:
-        setCredentials({
-          email: "",
-          password: ""
-        });
-        break;
-    }
+  const clearText = (input_field) => {
+    setCredentials({...credentials, [input_field]: ""});
   }
 
   const clientSideValidation = () => {
@@ -86,6 +67,10 @@ export default function Login() {
         },
         body: JSON.stringify({email: credentials.email, password: credentials.password})
       });
+      if (!response.ok) {
+        showAlert("fail", "Server error. Please try again later!");
+        return;
+      }
       const json = await response.json();
       if (json.success){
           // Saving the auth token and redirect to home
@@ -94,8 +79,7 @@ export default function Login() {
           handleCursorLeave();
           navigate("/");
           showAlert("success", "Welcome back, " + handleCapitalizeFirstLetter(localStorage.getItem("username")) + "!");
-      }
-      else{
+      }else{
           showAlert("fail", "Invalid credentials. Please try again!");
       }
     }
@@ -118,7 +102,7 @@ export default function Login() {
                   <label htmlFor="email" style={{fontWeight: "500"}}>Email</label>
                 </div>
                 <div className="d-flex align-items-center">
-                  <input type="email" className="form-control" id="email" name="email" placeholder="Enter email" onChange={handleChange} autoComplete="true" value={credentials.email}/>
+                  <input type="email" className="form-control" id="email" name="email" placeholder="Enter email" onChange={handleChange} autoComplete="on" value={credentials.email}/>
                   <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("email");}} style={{margin: "0px 2px 0px 6px", opacity: `${credentials.email===""?"0":"1"}`}}/>
                 </div>
             </div>
@@ -128,7 +112,7 @@ export default function Login() {
                   <label htmlFor="password" style={{fontWeight: "500"}}>Password</label>
                 </div>
                 <div className="d-flex align-items-center">
-                  <input type={passwordType} className="form-control" id="password" name="password" placeholder="Enter password" onChange={handleChange} autoComplete="true" value={credentials.password}/>
+                  <input type={passwordType} className="form-control" id="password" name="password" placeholder="Enter password" onChange={handleChange} autoComplete="on" value={credentials.password}/>
                   <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("password");}} style={{margin: "0px 2px 0px 6px", opacity: `${credentials.password===""?"0":"1"}`}}/>
                 </div>
             </div>

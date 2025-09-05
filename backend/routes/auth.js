@@ -16,9 +16,17 @@ var fetchUserDetails = require('../middleware/fetchUserDetails');
 
 // Route 1: sign up using POST method, URL "/api/auth/signup" with validation
 router.post('/signup', [
-  body('name', 'Enter a valid name').isLength({ min: 3 }),
-  body('email', 'Enter a valid email').isEmail(),
-  body('password', 'Password must be at least 5 characters').isLength({ min: 5 })
+  body('name').exists().withMessage('Name must not be empty')
+  .isLength({ min: 3, max: 25 }).withMessage('Name must be atleast 3 and cannot be more than 25 characters')
+  .matches(/^[A-Za-z]+(?: [A-Za-z]+)*$/).withMessage('Name can contain only letters and single consecutive space'),
+  
+  body('email').exists().withMessage('Email must not be empty')
+  .isEmail().withMessage('Enter a valid email')
+  .normalizeEmail(),
+  
+  body('password').exists().withMessage('Password must not be empty')
+  .isLength({ min: 5, max: 10 }).withMessage('Password must be atleast 5 and cannot be more than 10 characters')
+  .matches(/^[A-Za-z0-9!@#$%^&*()_+\-={};':"|,.<>/?]+$/).withMessage('Password can only contain letters, numbers, and special characters')
 ], async (req, res) => {
   let success = false;
   // checking if the request passed all validation rules
@@ -27,7 +35,7 @@ router.post('/signup', [
    // if validation failed, return 400 Bad Request with the error messages
   if (!errors.isEmpty()) {
     success = false;
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ error: errors.array() });
   }
 
   try {
@@ -69,8 +77,11 @@ router.post('/signup', [
 
 // Route 2: log in using POST method, URL "/api/auth/login" with validation
 router.post('/login', [
-  body('email', 'Enter a valid email').isEmail(),
-  body('password', 'Password must not be empty').exists()
+  body('email').exists().withMessage('Email must not be empty')
+  .isEmail().withMessage('Enter a valid email')
+  .normalizeEmail(),
+  
+  body('password').exists().withMessage('Password must not be empty')
 ], async (req, res) => {
   let success = false;
   // checking if the request passed all validation rules
@@ -79,7 +90,7 @@ router.post('/login', [
    // if validation failed, return 400 Bad Request with the error messages
   if (!errors.isEmpty()) {
     success = false;
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({ error: errors.array() });
   }
 
   const {email, password} = req.body;

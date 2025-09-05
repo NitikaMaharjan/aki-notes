@@ -24,7 +24,7 @@ export default function Signup() {
   const [confirmPasswordType, setConfirmPasswordType] = useState("password");
 
   const handleChange = (e) =>{
-    setCredentials({...credentials, [e.target.name]: e.target.value});
+    setCredentials({...credentials, [e.target.name]: e.target.value.trimStart()});
   }
 
   const changePasswordType = () => {
@@ -43,69 +43,57 @@ export default function Signup() {
     }
   }
 
-  const clearText = (input) => {
-    switch (input){
-      case "name":
-        setCredentials({
-          name: "",
-          email: credentials.email,
-          password: credentials.password,
-          confirm_password: credentials.confirm_password
-        });
-        break;
-      case "email":
-        setCredentials({
-          name: credentials.name,
-          email: "",
-          password: credentials.password,
-          confirm_password: credentials.confirm_password
-        });
-        break;
-      case "password":
-        setCredentials({
-          name: credentials.name,
-          email: credentials.email,
-          password: "",
-          confirm_password: credentials.confirm_password
-        });
-        break;
-      case "confirm password":
-        setCredentials({
-          name: credentials.name,
-          email: credentials.email,
-          password: credentials.password,
-          confirm_password: ""
-        });
-        break;
-      default:
-        setCredentials({
-          name: "",
-          email: "",
-          password: "",
-          confirm_password: ""
-        });
-        break;
-    }
+  const clearText = (input_field) => {
+    setCredentials({...credentials, [input_field]: ""});
   }
 
   const clientSideValidation = () => {
-    if(credentials.name==="" && credentials.email!=="" && credentials.password!=="" && credentials.confirm_password!==""){
+    const nameRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+    const passwordRegex = /^[A-Za-z0-9!@#$%^&*()_+\-={};':"|,.<>/?]+$/;
+
+    let trimmed_name = credentials.name.trim();
+    let trimmed_email = credentials.email.trim().toLowerCase();
+    let trimmed_password = credentials.password.trim();
+    let trimmed_confirm_password = credentials.confirm_password.trim();
+
+    if(trimmed_name==="" && trimmed_email!=="" && trimmed_password!=="" && trimmed_confirm_password!==""){
       showAlert("warning", "Name is required. Please try again!");
       return false;
-    }else if(credentials.name!=="" && credentials.email==="" && credentials.password!=="" && credentials.confirm_password!==""){
+    }else if(trimmed_name!=="" && trimmed_email==="" && trimmed_password!=="" && trimmed_confirm_password!==""){
       showAlert("warning", "Email is required. Please try again!");
       return false;
-    }else if(credentials.name!=="" && credentials.email!=="" && credentials.password==="" && credentials.confirm_password!==""){
+    }else if(trimmed_name!=="" && trimmed_email!=="" && trimmed_password==="" && trimmed_confirm_password!==""){
       showAlert("warning", "Password is required. Please try again!");
       return false;
-    }else if(credentials.name!=="" && credentials.email!=="" && credentials.password!=="" && credentials.confirm_password===""){
+    }else if(trimmed_name!=="" && trimmed_email!=="" && trimmed_password!=="" && trimmed_confirm_password===""){
       showAlert("warning", "Confirm Password is required. Please try again!");
       return false;
-    }else if (credentials.name==="" || credentials.email==="" || credentials.password==="" || credentials.confirm_password===""){
+    }else if (trimmed_name==="" || trimmed_email==="" || trimmed_password==="" || trimmed_confirm_password===""){
       showAlert("warning", "Please enter your credentials to sign up!");
+      return false;
+    }else if (trimmed_name.length<3){
+      showAlert("warning", "Username must be atleast 3 characters!");
+      return false;
+    }else if (trimmed_name.length>25){
+      showAlert("warning", "Username cannot be more than 25 characters!");
+      return false;
+    }else if (!nameRegex.test(trimmed_name)){
+      showAlert("warning", "Username can only contain letters and single consecutive space!");
       return false;
     }else if(!document.getElementById("email").checkValidity()){
       showAlert("warning", "Please enter a valid email address!");
+      return false;
+    }else if (trimmed_password.length<5){
+      showAlert("warning", "Password must be atleast 5 characters!");
+      return false;
+    }else if (trimmed_password.length>10){
+      showAlert("warning", "Password cannot be more than 10 characters!");
+      return false;
+    }else if (!passwordRegex.test(trimmed_password)){
+      showAlert("warning", "Password can only contain letters, numbers, and special characters!");
+      return false;
+    }else if (trimmed_password !== trimmed_confirm_password){
+      showAlert("warning", "Password and confirm password must match!");
       return false;
     }
     return true;
@@ -119,15 +107,18 @@ export default function Signup() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({name: credentials.name, email: credentials.email, password: credentials.password})
+        body: JSON.stringify({name: credentials.name.trim(), email: credentials.email.trim().toLowerCase(), password: credentials.password.trim()})
       });
+      if (!response.ok) {
+        showAlert("fail", "Server error. Please try again later!");
+        return;
+      }
       const json = await response.json();
       if (json.success){
           handleCursorLeave();
           navigate("/login");
           showAlert("success", "Your account is ready!");
-      }
-      else{
+      }else{
           showAlert("fail", "Invalid credentials. Please try again!");
       }
     }
@@ -147,10 +138,10 @@ export default function Signup() {
             <div className="form-group mb-2">
                 <div className="d-flex align-items-center gap-2 mb-1">
                   <img src={`${theme==="light"?"/icons/user_black.png":"/icons/user_white.png"}`} height="18px" width="19px" alt="user icon"/>
-                  <label htmlFor="name" style={{fontWeight: "500"}}>Name</label>
+                  <label htmlFor="name" style={{fontWeight: "500"}}>Username</label>
                 </div>
                 <div className="d-flex align-items-center">
-                  <input type="text" className="form-control" id="name" name="name" placeholder="Enter Name" onChange={handleChange} autoComplete="true" value={credentials.name}/>
+                  <input type="text" className="form-control" id="name" name="name" placeholder="Enter username" onChange={handleChange} autoComplete="on" value={credentials.name}/>
                   <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("name");}} style={{margin: "0px 2px 0px 6px", opacity: `${credentials.name===""?"0":"1"}`}}/>
                 </div>
             </div>
@@ -160,7 +151,7 @@ export default function Signup() {
                   <label htmlFor="email" style={{fontWeight: "500"}}>Email</label>
                 </div>
                 <div className="d-flex align-items-center">
-                  <input type="email" className="form-control" id="email" name="email" placeholder="Enter email" onChange={handleChange} autoComplete="true" value={credentials.email}/>
+                  <input type="email" className="form-control" id="email" name="email" placeholder="Enter email" onChange={handleChange} autoComplete="on" value={credentials.email}/>
                   <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("email");}} style={{margin: "0px 2px 0px 6px", opacity: `${credentials.email===""?"0":"1"}`}}/>
                 </div>
             </div>
@@ -170,7 +161,7 @@ export default function Signup() {
                   <label htmlFor="password" style={{fontWeight: "500"}}>Password</label>
                 </div>
                 <div className="d-flex align-items-center">
-                  <input type={passwordType} className="form-control" id="password" name="password" placeholder="Enter password" onChange={handleChange} autoComplete="true" value={credentials.password}/>
+                  <input type={passwordType} className="form-control" id="password" name="password" placeholder="Enter password" onChange={handleChange} autoComplete="on" value={credentials.password}/>
                   <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("password");}} style={{margin: "0px 2px 0px 6px", opacity: `${credentials.password===""?"0":"1"}`}}/>
                 </div>
                 
@@ -181,8 +172,8 @@ export default function Signup() {
                   <label htmlFor="confirm_password" style={{fontWeight: "500"}}>Confirm Password</label>
                 </div>
                 <div className="d-flex align-items-center">
-                  <input type={confirmPasswordType} className="form-control" id="confirm_password" name="confirm_password" placeholder="Enter confirm password" onChange={handleChange} autoComplete="true" value={credentials.confirm_password}/>
-                  <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("confirm password");}} style={{margin: "0px 2px 0px 6px", opacity: `${credentials.confirm_password===""?"0":"1"}`}}/>
+                  <input type={confirmPasswordType} className="form-control" id="confirm_password" name="confirm_password" placeholder="Enter confirm password" onChange={handleChange} autoComplete="on" value={credentials.confirm_password}/>
+                  <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("confirm_password");}} style={{margin: "0px 2px 0px 6px", opacity: `${credentials.confirm_password===""?"0":"1"}`}}/>
                 </div>
             </div>
             <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
