@@ -1,5 +1,6 @@
 const mongoose = require("mongoose"); // importing library to work with mongoDB inside node.js
-const mongoURI = "mongodb://localhost:27017/aki-notes"; // connection string that tells mongoose exactly how to find and connect to database
+require('dotenv').config();
+const mongoURI = process.env.MONGO_URI; // connection string that tells mongoose exactly how to find and connect to database
 
 const connectToMongo = async () => {
   try {

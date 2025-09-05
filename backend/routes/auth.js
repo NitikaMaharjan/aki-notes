@@ -9,7 +9,7 @@ const { body, validationResult } = require('express-validator');
 
 const bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken');
-const jwt_secret = "aginomoto$2025";
+const jwt_secret = process.env.JWT_SECRET;
 
 // importing fetchUserDetails middleware
 var fetchUserDetails = require('../middleware/fetchUserDetails');

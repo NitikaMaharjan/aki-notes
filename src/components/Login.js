@@ -98,7 +98,7 @@ export default function Login() {
           <form data-bs-theme={`${theme==="light"?"light":"dark"}`}>
             <div className="form-group mb-2">
                 <div className="d-flex align-items-center gap-2 mb-1">
-                  <img src={`${theme==="light"?"/icons/email_black.png":"/icons/email_white.png"}`} height="20px" width="20px" alt="email icon"/>
+                  <img src={`${theme==="light"?"/icons/email_black.png":"/icons/email_white.png"}`} height="18px" width="18px" alt="email icon"/>
                   <label htmlFor="email" style={{fontWeight: "500"}}>Email</label>
                 </div>
                 <div className="d-flex align-items-center">
@@ -108,7 +108,7 @@ export default function Login() {
             </div>
             <div className="form-group mb-3">
                 <div className="d-flex align-items-center gap-2 mb-1">
-                  <img src={`${passwordType==="password"?theme==="light"?"/icons/eye_hide_black.png":"/icons/eye_hide_white.png":theme==="light"?"/icons/eye_black.png":"/icons/eye_white.png"}`} height="20px" width="20px" alt="eye icon" onClick={changePasswordType}/>
+                  <img src={`${passwordType==="password"?theme==="light"?"/icons/eye_hide_black.png":"/icons/eye_hide_white.png":theme==="light"?"/icons/eye_black.png":"/icons/eye_white.png"}`} height="18px" width="18px" alt="eye icon" onClick={changePasswordType}/>
                   <label htmlFor="password" style={{fontWeight: "500"}}>Password</label>
                 </div>
                 <div className="d-flex align-items-center">
