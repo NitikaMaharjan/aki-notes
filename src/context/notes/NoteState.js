@@ -24,7 +24,7 @@ export default function NoteState(props) {
                 'Content-Type': 'application/json',
                 "authtoken": localStorage.getItem("token")
             },
-            body: JSON.stringify({title, description, tag})
+            body: JSON.stringify({title: title===""?"Untitled":title, description, tag: tag === ""?"General":tag})
         });
         const new_note = await response.json();
         setNotes(notes.concat(new_note));
@@ -37,13 +37,13 @@ export default function NoteState(props) {
                 'Content-Type': 'application/json',
                 "authtoken": localStorage.getItem("token")
             },
-            body: JSON.stringify({title, description, tag})
+            body: JSON.stringify({title: title===""?"Untitled":title, description, tag: tag === ""?"General":tag})
         });
         const json = await response.json();
         console.log(json);
         setNotes(prevNotes =>
             prevNotes.map(note =>
-            note._id === id ? {...note, title, description, tag: tag === ""?"General":tag} : note
+            note._id === id ? {...note, title: title===""?"Untitled":title, description, tag: tag === ""?"General":tag} : note
             )
         );
     }

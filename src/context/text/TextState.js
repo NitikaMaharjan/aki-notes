@@ -28,7 +28,7 @@ export default function TextState(props) {
     }
 
     const trimTitle = (text) => {
-        return  text.length<=18?text:text.slice(0,18)+"...";
+        return  text.length<=16?text:text.slice(0,16)+"...";
     }
     
     const trimDescription = (text) => {

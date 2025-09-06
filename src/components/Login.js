@@ -103,7 +103,7 @@ export default function Login() {
                 </div>
                 <div className="d-flex align-items-center">
                   <input type="email" className="form-control" id="email" name="email" placeholder="Enter email" onChange={handleChange} autoComplete="on" value={credentials.email}/>
-                  <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("email");}} style={{margin: "0px 2px 0px 6px", opacity: `${credentials.email===""?"0":"1"}`}}/>
+                  <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("email");}} style={{margin: "0px 2px 0px 10px", opacity: `${credentials.email===""?"0":"1"}`}}/>
                 </div>
             </div>
             <div className="form-group mb-3">
@@ -113,7 +113,7 @@ export default function Login() {
                 </div>
                 <div className="d-flex align-items-center">
                   <input type={passwordType} className="form-control" id="password" name="password" placeholder="Enter password" onChange={handleChange} autoComplete="on" value={credentials.password}/>
-                  <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("password");}} style={{margin: "0px 2px 0px 6px", opacity: `${credentials.password===""?"0":"1"}`}}/>
+                  <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("password");}} style={{margin: "0px 2px 0px 10px", opacity: `${credentials.password===""?"0":"1"}`}}/>
                 </div>
             </div>
             <div style={{width: "100%", display: "flex", justifyContent: "center"}}>
