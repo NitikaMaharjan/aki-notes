@@ -28,7 +28,7 @@ export default function AddNote(props) {
     }
 
     const NoteValidation = () => {
-        const titleRegex = /^[A-Za-z0-9!@#$%^&*()-+_?|]+(?: [A-Za-z0-9!@#$%^&*()-+_?|]+)*$/;
+        const titleRegex = /^[A-Za-z0-9!@#$%^&*()-+_?|',:;]+(?: [A-Za-z0-9!@#$%^&*()-+_?|',:;]+)*$/;
         const tagRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
 
         let trimmed_title = note.title.trim();
@@ -54,7 +54,7 @@ export default function AddNote(props) {
             showAlert("warning", "Title cannot be more than 60 characters!");
             return false;
         }else if(trimmed_title.length!==0 && !titleRegex.test(trimmed_title)){
-            showAlert("warning", "Title can only contain letters, numbers, single consecutive space and some special characters !@#$%^&*()-+_?|");
+            showAlert("warning", "Title can only contain letters, numbers, single consecutive space and some special characters !@#$%^&*()-+_?|',:;");
             return false;
         }else if(trimmed_tag.length!==0 && trimmed_tag.length<5){
             showAlert("warning", "Tag must be atleast 5 characters!");

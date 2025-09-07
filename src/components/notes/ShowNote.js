@@ -44,15 +44,65 @@ export default function Note() {
     };
 
     const handleChange = (e) =>{
-        setSelectedNote({...selectedNote, [e.target.name]: e.target.value});
+        setSelectedNote({...selectedNote, [e.target.name]: e.target.value.trimStart()});
+    }
+
+    const NoteValidation = () => {
+        const titleRegex = /^[A-Za-z0-9!@#$%^&*()-+_?|',:;]+(?: [A-Za-z0-9!@#$%^&*()-+_?|',:;]+)*$/;
+        const tagRegex = /^[A-Za-z]+(?: [A-Za-z]+)*$/;
+
+        let id = selectedNote._id;
+        let trimmed_title = selectedNote.title.trim();
+        let trimmed_tag = selectedNote.tag.trim();
+        let trimmed_description = selectedNote.description.trim();
+
+        if(trimmed_title==="Untitled" && trimmed_tag==="General" && trimmed_description===""){
+            deleteNote(id); 
+            activeModal.hide();
+            return false;
+        }else if(trimmed_title==="" && trimmed_tag==="" && trimmed_description===""){
+            deleteNote(id); 
+            activeModal.hide();            
+            return false;
+        }else if(trimmed_title==="Untitled" && trimmed_tag==="" && trimmed_description===""){
+            deleteNote(id); 
+            activeModal.hide();            
+            return false;
+        }else if(trimmed_title==="" && trimmed_tag==="General" && trimmed_description===""){
+            deleteNote(id); 
+            activeModal.hide();            
+            return false;
+        }else if(trimmed_title.length!==0 && trimmed_title.length<5){
+            showAlert("warning", "Title must be atleast 5 characters!");
+            return false;
+        }else if(trimmed_title.length>60){
+            showAlert("warning", "Title cannot be more than 60 characters!");
+            return false;
+        }else if(trimmed_title.length!==0 && !titleRegex.test(trimmed_title)){
+            showAlert("warning", "Title can only contain letters, numbers, single consecutive space and some special characters !@#$%^&*()-+_?|',:;");
+            return false;
+        }else if(trimmed_tag.length!==0 && trimmed_tag.length<5){
+            showAlert("warning", "Tag must be atleast 5 characters!");
+            return false;
+        }else if(trimmed_tag.length>15){
+            showAlert("warning", "Tag cannot be more than 15 characters!");
+            return false;
+        }else if(trimmed_tag.length!==0 && !tagRegex.test(trimmed_tag)){
+            showAlert("warning", "Tag can only contain letters and single consecutive space!");
+            return false;
+        }
+
+        return true;
     }
 
     const handleSubmit = async()=>{
-        await editNote(selectedNote._id, selectedNote.title===""?"Untitled":selectedNote.title, selectedNote.description===""?" ":selectedNote.description, selectedNote.tag===""?"General":selectedNote.tag);
-        await fetchNote();
-        handleCursorLeave();
-        activeModal.hide();
-        showAlert("success", "Changes saved!");
+        if(NoteValidation()){
+            await editNote(selectedNote._id, selectedNote.title===""?"Untitled":selectedNote.title.trim(), selectedNote.description===""?" ":selectedNote.description.trim(), selectedNote.tag===""?"General":selectedNote.tag.trim());
+            await fetchNote();
+            handleCursorLeave();
+            activeModal.hide();
+            showAlert("success", "Changes saved!");
+        }
     }
 
     const handleDeleteNote = (id) => {
@@ -72,8 +122,12 @@ export default function Note() {
         }
     }
 
-    const clearText = () => {
-        setKeyword("");
+    const clearText = (input_field) => {
+        if(keyword!==""){
+            setKeyword("");
+        }else{
+            setSelectedNote({...selectedNote, [input_field]: ""});
+        }
     }
 
     useEffect(() => {
@@ -173,15 +227,24 @@ export default function Note() {
                         </div>
                         <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
                             <label htmlFor="title" className="mb-1" style={{fontWeight: "500"}}>Title</label>
-                            <input type="text" className="form-control" id="title" name="title" value={selectedNote.title} placeholder="Enter title" onChange={handleChange} autoComplete="on"/>
+                            <div className="d-flex align-items-center">
+                                <input type="text" className="form-control" id="title" name="title" placeholder="Enter title" onChange={handleChange} autoComplete="on" value={selectedNote.title==="Untitled"?"":selectedNote.title}/>
+                                <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("title");}} style={{margin: "0px 2px 0px 10px", opacity: `${selectedNote.title==="Untitled" || selectedNote.title==="" ?"0":"1"}`}}/>
+                            </div>
                         </div>
                         <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
                             <label htmlFor="tag" className="mb-1" style={{fontWeight: "500"}}>Tag</label>
-                            <input type="text" className="form-control" id="tag" name="tag" value={selectedNote.tag} placeholder="Enter tag" onChange={handleChange} autoComplete="on"/>
+                            <div className="d-flex align-items-center">
+                                <input type="text" className="form-control" id="tag" name="tag" placeholder="Enter tag" onChange={handleChange} autoComplete="on" value={selectedNote.tag==="General"?"":selectedNote.tag}/>
+                                <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("tag");}} style={{margin: "0px 2px 0px 10px", opacity: `${selectedNote.tag==="General" || selectedNote.tag===""?"0":"1"}`}}/>
+                            </div>
                         </div>
                         <div className="modal-body" style={{paddingTop: "0px", paddingBottom: "6px"}}>
                             <label htmlFor="description" className="mb-1" style={{fontWeight: "500"}}>Description</label>
-                            <textarea className="form-control" id="description" name="description" value={selectedNote.description} placeholder="Enter description" rows="3" onChange={handleChange} autoComplete="on"></textarea>                          
+                            <div className="d-flex align-items-center">
+                                <textarea className="form-control" id="description" name="description" placeholder="Enter description" rows="3" onChange={handleChange} autoComplete="on" value={selectedNote.description}></textarea>
+                                <img src={`${theme==="light"?"/icons/close.png":"/icons/close2.png"}`} height="18px" width="18px" alt="close icon" onClick={()=>{clearText("description");}} style={{margin: "0px 2px 0px 10px", opacity: `${selectedNote.description===""?"0":"1"}`}}/>
+                            </div>                          
                         </div>                       
                         <div className="modal-body" style={{display: "flex", justifyContent: "center", paddingTop: "4px"}}>
                             <button className="add-note-btn" onClick={handleSubmit} onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>Edit Note</button>
