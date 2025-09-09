@@ -9,7 +9,7 @@ router.get("/getnote", fetchUserDetails, async (req, res) => {
   const user_id = req.user.id;
 
   try {
-    const notes = await Notes.find({ user: user_id }).sort({ date: -1 });
+    const notes = await Notes.find({ user: user_id });
     res.json(notes);
   } catch (err) {
     // logging other errors to console and returning 500 Internal Server Error

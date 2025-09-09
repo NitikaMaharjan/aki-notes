@@ -31,6 +31,7 @@ export default function Note() {
     const [loading, setLoading] = useState(true);
     const [keyword, setKeyword] = useState("");
     const [filterednotes, setFilteredNotes] = useState([]);
+    const [selectedOrder, setSelectedOrder] = useState("latest");
     
     const OpenNoteDetailModal = (note) => {
         setSelectedNote(note);
@@ -173,14 +174,27 @@ export default function Note() {
                             </div>
                         </form>
                     </div>
+                    <div className="d-flex justify-content-center gap-2" style={{marginTop: "20px"}}>
+                        <button className={`chip${theme==="light"?"-light":"-dark"} ${keyword===""?"chip-active":""}`} onClick={()=>{setKeyword("")}}>All</button>
+                        <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="latest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest")}}>Latest</button>
+                        <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="oldest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("oldest")}}>Oldest</button>
+                    </div>
+                    
                     {loading?
                         <Throbber/>
                     :
                     <>
                         <div className="notes-collection">
-                            {(keyword===""?notes:filterednotes).map((note)=>{
-                                return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
-                            })}
+                            {   
+                                selectedOrder==="latest"?
+                                    (keyword===""?notes:filterednotes).map((note)=>{
+                                        return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
+                                    }).reverse()
+                                    :
+                                    (keyword===""?notes:filterednotes).map((note)=>{
+                                        return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
+                                    })
+                            }
                         </div>
                         <div>
                             <a className={`up-arrow${scroll?"-show":""}`} href="#top" onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>&uarr;</a>
