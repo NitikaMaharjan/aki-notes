@@ -7,6 +7,7 @@ import TextContext from '../../context/text/TextContext';
 import NoteContext from "../../context/notes/NoteContext";
 import Throbber from '../Throbber';
 import NoteItem from './NoteItem';
+import ChipTags from './ChipTags';
 
 export default function Note() {
 
@@ -32,6 +33,7 @@ export default function Note() {
     const [keyword, setKeyword] = useState("");
     const [filterednotes, setFilteredNotes] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState("latest");
+    const [uniqueTags, setUniqueTags] = useState([]);
     
     const OpenNoteDetailModal = (note) => {
         setSelectedNote(note);
@@ -124,11 +126,21 @@ export default function Note() {
     }
 
     const clearText = (input_field) => {
-        if(keyword!==""){
+        if(input_field === "keyword"){
             setKeyword("");
         }else{
             setSelectedNote({...selectedNote, [input_field]: ""});
         }
+    }
+
+    const getUniqueTags = () => {
+        let unique_tags = [];
+        for (let i=1; i<notes.length; i++){
+            if (!unique_tags.includes(notes[i].tag)) {
+                unique_tags.push(notes[i].tag);
+            }
+        }
+        setUniqueTags(unique_tags);     
     }
 
     useEffect(() => {
@@ -146,6 +158,12 @@ export default function Note() {
 
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        if (notes.length !== 0) {
+            getUniqueTags();
+        }
+    }, [notes]);
     
     useEffect(() => {
         if(activeModal!=null){
@@ -169,15 +187,21 @@ export default function Note() {
                         <form>
                             <div className="d-flex align-items-center" style={{width: "500px", padding: "6px 12px", borderRadius: "6px", backgroundColor: `${theme==="light"?"white":"#212529"}`, border: `${theme==="light"?"1px solid rgba(0, 0, 0, 0.15)":"1px solid #424549"}`}}> 
                                 <img src="/icons/search.png" height="24px" width="24px" alt="search icon"/>&nbsp;&nbsp;
-                                <input className="search-bar-input" placeholder="Search notes" value={keyword} onChange={handleKeywordChange} style={{backgroundColor: `${theme==="light"?"white":"#212529"}`, color: `${theme==="light"?"black":"white"}`}}/>&nbsp;&nbsp;
-                                <img src="/icons/close3.png" height="14px" width="14px" alt="close icon" onClick={clearText} style={{opacity: `${keyword===""?"0":"1"}`}}/>
+                                <input id="search" name="search" className="search-bar-input" placeholder="Search notes" value={keyword} onChange={handleKeywordChange} style={{backgroundColor: `${theme==="light"?"white":"#212529"}`, color: `${theme==="light"?"black":"white"}`}}/>&nbsp;&nbsp;
+                                <img src="/icons/close3.png" height="14px" width="14px" alt="close icon" onClick={()=>{clearText("keyword")}} style={{opacity: `${keyword===""?"0":"1"}`}}/>
                             </div>
                         </form>
-                    </div>
-                    <div className="d-flex justify-content-center gap-2" style={{marginTop: "20px"}}>
+                    </div>                    
+                    <div className="d-flex gap-2" style={{marginTop: "20px"}}>
                         <button className={`chip${theme==="light"?"-light":"-dark"} ${keyword===""?"chip-active":""}`} onClick={()=>{setKeyword("")}}>All</button>
                         <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="latest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest")}}>Latest</button>
                         <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="oldest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("oldest")}}>Oldest</button>
+                        
+                        {                    
+                            uniqueTags.map((tag) => {
+                                return <ChipTags tag={tag}/> 
+                            })
+                        }
                     </div>
                     
                     {loading?
