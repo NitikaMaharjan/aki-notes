@@ -27,6 +27,8 @@ export default function Note() {
         date: "",
         __v: ""
     });
+    const [latestNote, setLatestNote] = useState([]);
+    const [oldestNote, setOldestNote] = useState([]);
     const [activeModal, setActiveModal] = useState(null);
     const [xScrollLeft, setXScrollLeft] = useState(false);
     const [xScrollRight, setXScrollRight] = useState(false);
@@ -34,7 +36,9 @@ export default function Note() {
     const [yScroll, setYScroll] = useState(false);
     const [loading, setLoading] = useState(true);
     const [keyword, setKeyword] = useState("");
-    const [filterednotes, setFilteredNotes] = useState([]);
+    const [filteredNotes, setFilteredNotes] = useState([]);
+    const [latestfilterednotes, setLatestFilteredNotes] = useState([]);
+    const [oldestfilterednotes, setOldestFilteredNotes] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState("latest");
     const [uniqueTags, setUniqueTags] = useState([]);
 
@@ -80,17 +84,11 @@ export default function Note() {
             deleteNote(id); 
             activeModal.hide();            
             return false;
-        }else if(trimmed_title.length!==0 && trimmed_title.length<5){
-            showAlert("warning", "Title must be atleast 5 characters!");
-            return false;
         }else if(trimmed_title.length>60){
             showAlert("warning", "Title cannot be more than 60 characters!");
             return false;
         }else if(trimmed_title.length!==0 && !titleRegex.test(trimmed_title)){
             showAlert("warning", "Title can only contain letters, numbers, single consecutive space and some special characters !@#$%^&*()-+_?|',:;");
-            return false;
-        }else if(trimmed_tag.length!==0 && trimmed_tag.length<5){
-            showAlert("warning", "Tag must be atleast 5 characters!");
             return false;
         }else if(trimmed_tag.length>15){
             showAlert("warning", "Tag cannot be more than 15 characters!");
@@ -124,9 +122,14 @@ export default function Note() {
 
     const handleKeywordChange = (e) =>{
         setKeyword(e.target.value);
-        
+
         if(keyword.trim() !== ""){
-            setFilteredNotes(notes.filter((note)=>{return note.title.toLowerCase().includes(keyword.toLowerCase()) || note.tag.toLowerCase().includes(keyword.toLowerCase()) || note.description.toLowerCase().includes(keyword.toLowerCase())}));
+            let filtered_notes = notes.filter((note)=>{return note.title.toLowerCase().includes(keyword.toLowerCase()) || note.tag.toLowerCase().includes(keyword.toLowerCase()) || note.description.toLowerCase().includes(keyword.toLowerCase())});
+            setFilteredNotes(filtered_notes);
+            let latest_filtered_notes = [...filteredNotes].sort((a,b) => new Date(b.date) - new Date(a.date));
+            setLatestFilteredNotes(latest_filtered_notes);
+            let oldest_filtered_notes = [...filteredNotes].sort((a,b) => new Date(a.date) - new Date(b.date));
+            setOldestFilteredNotes(oldest_filtered_notes);
         }
     }
 
@@ -168,6 +171,16 @@ export default function Note() {
         }
     }
 
+    const latestNotes = () => {
+        let latest_notes = [...notes].sort((a,b) => new Date(b.date) - new Date(a.date));
+        setLatestNote(latest_notes);
+    }
+    
+    const oldestNotes = () => {
+        let oldest_notes = [...notes].sort((a,b) => new Date(a.date) - new Date(b.date));
+        setOldestNote(oldest_notes);
+    }
+
     useEffect(() => {
         if(localStorage.getItem("token")){
             fetchNote();
@@ -183,6 +196,14 @@ export default function Note() {
 
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        if (notes.length !== 0){
+            latestNotes();
+            oldestNotes();
+        }
+        // eslint-disable-next-line
+    }, [notes]);
 
     useEffect(() => {
         if (notes.length !== 0) {
@@ -257,11 +278,11 @@ export default function Note() {
                         <div className="notes-collection">
                             {   
                                 selectedOrder==="latest"?
-                                    (keyword===""?notes:filterednotes).map((note)=>{
+                                    (keyword===""?latestNote:selectedOrder==="latest"?latestfilterednotes:oldestfilterednotes).map((note)=>{
                                         return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
-                                    }).reverse()
+                                    })
                                     :
-                                    (keyword===""?notes:filterednotes).map((note)=>{
+                                    (keyword===""?oldestNote:selectedOrder==="oldest"?oldestfilterednotes:latestfilterednotes).map((note)=>{
                                         return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
                                     })
                             }

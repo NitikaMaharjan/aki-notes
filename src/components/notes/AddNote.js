@@ -47,17 +47,11 @@ export default function AddNote(props) {
         }else if(trimmed_title==="" && trimmed_tag==="General" && trimmed_description===""){
             showAlert("warning", "Please enter some text before saving your note!");
             return false;
-        }else if(trimmed_title.length!==0 && trimmed_title.length<5){
-            showAlert("warning", "Title must be atleast 5 characters!");
-            return false;
         }else if(trimmed_title.length>60){
             showAlert("warning", "Title cannot be more than 60 characters!");
             return false;
         }else if(trimmed_title.length!==0 && !titleRegex.test(trimmed_title)){
             showAlert("warning", "Title can only contain letters, numbers, single consecutive space and some special characters !@#$%^&*()-+_?|',:;");
-            return false;
-        }else if(trimmed_tag.length!==0 && trimmed_tag.length<5){
-            showAlert("warning", "Tag must be atleast 5 characters!");
             return false;
         }else if(trimmed_tag.length>15){
             showAlert("warning", "Tag cannot be more than 15 characters!");
