@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 import CursorContext from "../../context/cursor/CursorContext";
 import ThemeContext from '../../context/theme/ThemeContext';
 import ProgressContext from '../../context/progress/ProgressContext';
@@ -34,6 +34,8 @@ export default function Note() {
     const [filterednotes, setFilteredNotes] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState("latest");
     const [uniqueTags, setUniqueTags] = useState([]);
+
+    const scrollContainerRef = useRef(null);
     
     const OpenNoteDetailModal = (note) => {
         setSelectedNote(note);
@@ -144,6 +146,12 @@ export default function Note() {
         setUniqueTags(unique_tags);     
     }
 
+    const handleScroll = (scrollOffset) => {
+        if (scrollContainerRef.current) {
+            scrollContainerRef.current.scrollLeft += scrollOffset;
+        }
+    }
+
     useEffect(() => {
         if(localStorage.getItem("token")){
             fetchNote();
@@ -193,23 +201,31 @@ export default function Note() {
                                 <img src="/icons/close3.png" height="14px" width="14px" alt="close icon" onClick={()=>{clearText("keyword")}} style={{opacity: `${keyword===""?"0":"1"}`}}/>
                             </div>
                         </form>
-                    </div>  
-                    <div className="d-flex scroll-menu">
-                        <div className="d-flex gap-2" style={{marginTop: "20px"}}>
-                            <button className={`chip${theme==="light"?"-light":"-dark"} ${keyword===""?"chip-active":""}`} onClick={()=>{setKeyword("")}}>All</button>
-                            <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="latest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest")}}>Latest</button>
-                            <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="oldest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("oldest")}}>Oldest</button>
-                            
-                            {   
-                                uniqueTags.length !== 0?                 
-                                    uniqueTags.map((tag, index) => {
-                                        return <ChipTags key={index} tag={tag}/> 
-                                    })
-                                :
-                                    <></>
-                            }
-                        </div>
-                    </div>                  
+                    </div>
+                    <div className="d-flex align-items-center" style={{marginTop: "12px"}}> 
+                        <button className={`chip${theme==="light"?"-light":"-dark"}`} style={{marginRight: "6px"}} onClick={() => handleScroll(-100)}>
+                            <img src={`/icons/${theme==="light"?"left_light":"left_dark"}.png`} height="14px" width="14px" alt="left icon" style={{marginBottom: "3px", marginRight: "2px"}}/>
+                        </button>
+                        <div ref={scrollContainerRef} className="d-flex align-items-center scroll-menu">
+                            <div className="d-flex" style={{gap: "6px"}}>
+                                <button className={`chip${theme==="light"?"-light":"-dark"} ${keyword===""?"chip-active":""}`} onClick={()=>{setKeyword("")}}>All</button>
+                                <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="latest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest")}}>Latest</button>
+                                <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="oldest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("oldest")}}>Oldest</button>
+                                
+                                {   
+                                    uniqueTags.length !== 0?                 
+                                        uniqueTags.map((tag, index) => {
+                                            return <ChipTags key={index} tag={tag}/> 
+                                        })
+                                    :
+                                        <></>
+                                }
+                            </div>
+                        </div>                  
+                        <button className={`chip${theme==="light"?"-light":"-dark"}`} style={{marginLeft: "6px"}} onClick={() => handleScroll(100)}>
+                            <img src={`/icons/${theme==="light"?"right_light":"right_dark"}.png`} height="14px" width="14px" alt="right icon" style={{marginBottom: "3px", marginLeft: "2px"}}/>
+                        </button>
+                    </div>
                     
                     {loading?
                         <Throbber/>
