@@ -135,6 +135,7 @@ export default function Note() {
 
     const getUniqueTags = () => {
         let unique_tags = [];
+        unique_tags.push(notes[0].tag);
         for (let i=1; i<notes.length; i++){
             if (!unique_tags.includes(notes[i].tag)) {
                 unique_tags.push(notes[i].tag);
@@ -163,6 +164,7 @@ export default function Note() {
         if (notes.length !== 0) {
             getUniqueTags();
         }
+        // eslint-disable-next-line
     }, [notes]);
     
     useEffect(() => {
@@ -191,18 +193,23 @@ export default function Note() {
                                 <img src="/icons/close3.png" height="14px" width="14px" alt="close icon" onClick={()=>{clearText("keyword")}} style={{opacity: `${keyword===""?"0":"1"}`}}/>
                             </div>
                         </form>
-                    </div>                    
-                    <div className="d-flex gap-2" style={{marginTop: "20px"}}>
-                        <button className={`chip${theme==="light"?"-light":"-dark"} ${keyword===""?"chip-active":""}`} onClick={()=>{setKeyword("")}}>All</button>
-                        <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="latest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest")}}>Latest</button>
-                        <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="oldest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("oldest")}}>Oldest</button>
-                        
-                        {                    
-                            uniqueTags.map((tag) => {
-                                return <ChipTags tag={tag}/> 
-                            })
-                        }
-                    </div>
+                    </div>  
+                    <div className="d-flex scroll-menu">
+                        <div className="d-flex gap-2" style={{marginTop: "20px"}}>
+                            <button className={`chip${theme==="light"?"-light":"-dark"} ${keyword===""?"chip-active":""}`} onClick={()=>{setKeyword("")}}>All</button>
+                            <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="latest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest")}}>Latest</button>
+                            <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="oldest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("oldest")}}>Oldest</button>
+                            
+                            {   
+                                uniqueTags.length !== 0?                 
+                                    uniqueTags.map((tag, index) => {
+                                        return <ChipTags key={index} tag={tag}/> 
+                                    })
+                                :
+                                    <></>
+                            }
+                        </div>
+                    </div>                  
                     
                     {loading?
                         <Throbber/>
