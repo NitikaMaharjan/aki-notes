@@ -28,7 +28,10 @@ export default function Note() {
         __v: ""
     });
     const [activeModal, setActiveModal] = useState(null);
-    const [scroll, setScroll] = useState(false);
+    const [xScrollLeft, setXScrollLeft] = useState(false);
+    const [xScrollRight, setXScrollRight] = useState(false);
+    const [xScrollRightPrevValue, setXScrollRightPrevValue] = useState(null);
+    const [yScroll, setYScroll] = useState(false);
     const [loading, setLoading] = useState(true);
     const [keyword, setKeyword] = useState("");
     const [filterednotes, setFilteredNotes] = useState([]);
@@ -148,7 +151,20 @@ export default function Note() {
 
     const handleScroll = (scrollOffset) => {
         if (scrollContainerRef.current) {
+            setXScrollRightPrevValue(scrollContainerRef.current.scrollLeft);
             scrollContainerRef.current.scrollLeft += scrollOffset;
+        }
+
+        if (scrollContainerRef.current.scrollLeft!==0){
+            setXScrollLeft(true);
+        }else{
+            setXScrollLeft(false);
+        }
+
+        if (xScrollRightPrevValue===scrollContainerRef.current.scrollLeft){
+            setXScrollRight(false);
+        }else{
+            setXScrollRight(true);
         }
     }
 
@@ -159,9 +175,9 @@ export default function Note() {
 
         window.addEventListener("scroll", () => {
             if(window.scrollY){
-                setScroll(true);
+                setYScroll(true);
             }else{
-                setScroll(false);
+                setYScroll(false);
             }
         });
 
@@ -171,6 +187,11 @@ export default function Note() {
     useEffect(() => {
         if (notes.length !== 0) {
             getUniqueTags();
+            if(scrollContainerRef.current && scrollContainerRef.current.scrollWidth > scrollContainerRef.current.clientWidth){
+                setXScrollRight(true);
+            }else{
+                setXScrollRight(false);
+            }
         }
         // eslint-disable-next-line
     }, [notes]);
@@ -202,29 +223,31 @@ export default function Note() {
                             </div>
                         </form>
                     </div>
-                    <div className="d-flex align-items-center" style={{marginTop: "12px"}}> 
-                        <button className={`chip${theme==="light"?"-light":"-dark"}`} style={{marginRight: "6px"}} onClick={() => handleScroll(-100)}>
-                            <img src={`/icons/${theme==="light"?"left_light":"left_dark"}.png`} height="14px" width="14px" alt="left icon" style={{marginBottom: "3px", marginRight: "2px"}}/>
-                        </button>
-                        <div ref={scrollContainerRef} className="d-flex align-items-center scroll-menu">
-                            <div className="d-flex" style={{gap: "6px"}}>
-                                <button className={`chip${theme==="light"?"-light":"-dark"} ${keyword===""?"chip-active":""}`} onClick={()=>{setKeyword("")}}>All</button>
-                                <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="latest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest")}}>Latest</button>
-                                <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="oldest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("oldest")}}>Oldest</button>
-                                
-                                {   
-                                    uniqueTags.length !== 0?                 
-                                        uniqueTags.map((tag, index) => {
-                                            return <ChipTags key={index} tag={tag}/> 
-                                        })
-                                    :
-                                        <></>
-                                }
-                            </div>
-                        </div>                  
-                        <button className={`chip${theme==="light"?"-light":"-dark"}`} style={{marginLeft: "6px"}} onClick={() => handleScroll(100)}>
-                            <img src={`/icons/${theme==="light"?"right_light":"right_dark"}.png`} height="14px" width="14px" alt="right icon" style={{marginBottom: "3px", marginLeft: "2px"}}/>
-                        </button>
+                    <div className="d-flex justify-content-center">
+                        <div className="d-flex align-items-center" style={{marginTop: "12px", overflow: "hidden"}}> 
+                            <button className={`chip${theme==="light"?"-light":"-dark"} left-scroll-arrow${xScrollLeft?"-show":""}`} style={{marginRight: "6px"}} onClick={() => handleScroll(-100)}>
+                                <img src={`/icons/${theme==="light"?"left_light":"left_dark"}.png`} height="14px" width="14px" alt="left icon" style={{marginBottom: "3px", marginRight: "2px"}}/>
+                            </button>
+                            <div ref={scrollContainerRef} className="d-flex align-items-center scroll-menu">
+                                <div className="d-flex" style={{gap: "6px"}}>
+                                    <button className={`chip${theme==="light"?"-light":"-dark"} ${keyword===""?"chip-active":""}`} onClick={()=>{setKeyword("")}}>All</button>
+                                    <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="latest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest")}}>Latest</button>
+                                    <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="oldest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("oldest")}}>Oldest</button>
+                                    
+                                    {   
+                                        uniqueTags.length !== 0?                 
+                                            uniqueTags.map((tag, index) => {
+                                                return <ChipTags key={index} tag={tag}/> 
+                                            })
+                                        :
+                                            <></>
+                                    }
+                                </div>
+                            </div>                  
+                            <button className={`chip${theme==="light"?"-light":"-dark"} right-scroll-arrow${xScrollRight?"-show":""}`} style={{marginLeft: "6px"}} onClick={() => handleScroll(100)}>
+                                <img src={`/icons/${theme==="light"?"right_light":"right_dark"}.png`} height="14px" width="14px" alt="right icon" style={{marginBottom: "3px", marginLeft: "2px"}}/>
+                            </button>
+                        </div>
                     </div>
                     
                     {loading?
@@ -244,7 +267,7 @@ export default function Note() {
                             }
                         </div>
                         <div>
-                            <a className={`up-arrow${scroll?"-show":""}`} href="#top" onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>&uarr;</a>
+                            <a className={`up-arrow${yScroll?"-show":""}`} href="#top" onMouseEnter={handleCursorEnter} onMouseLeave={handleCursorLeave}>&uarr;</a>
                         </div>
                     </>
                     }
