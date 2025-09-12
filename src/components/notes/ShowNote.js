@@ -41,6 +41,7 @@ export default function Note() {
     const [oldestfilterednotes, setOldestFilteredNotes] = useState([]);
     const [selectedOrder, setSelectedOrder] = useState("latest");
     const [uniqueTags, setUniqueTags] = useState([]);
+    const [selectedTag, setSelectedTag] = useState("");
 
     const scrollContainerRef = useRef(null);
     
@@ -122,6 +123,7 @@ export default function Note() {
 
     const handleKeywordChange = (e) =>{
         setKeyword(e.target.value);
+        setSelectedTag("");
 
         if(keyword.trim() !== ""){
             let filtered_notes = notes.filter((note)=>{return note.title.toLowerCase().includes(keyword.toLowerCase()) || note.tag.toLowerCase().includes(keyword.toLowerCase()) || note.description.toLowerCase().includes(keyword.toLowerCase())});
@@ -179,6 +181,15 @@ export default function Note() {
     const oldestNotes = () => {
         let oldest_notes = [...notes].sort((a,b) => new Date(a.date) - new Date(b.date));
         setOldestNote(oldest_notes);
+    }
+
+    const handleSelectTag = (selected_tag) => {
+        setSelectedTag(selected_tag);
+        setSelectedOrder("none");
+        setKeyword("");
+
+        let filtered_notes = notes.filter((note)=>{return note.tag.toLowerCase().includes(selected_tag.toLowerCase())});
+        setFilteredNotes(filtered_notes);
     }
 
     useEffect(() => {
@@ -251,14 +262,14 @@ export default function Note() {
                             </button>
                             <div ref={scrollContainerRef} className="d-flex align-items-center scroll-menu">
                                 <div className="d-flex" style={{gap: "6px"}}>
-                                    <button className={`chip${theme==="light"?"-light":"-dark"} ${keyword===""?"chip-active":""}`} onClick={()=>{setKeyword("")}}>All</button>
-                                    <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="latest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest")}}>Latest</button>
-                                    <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="oldest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("oldest")}}>Oldest</button>
+                                    <button className={`chip${theme==="light"?"-light":"-dark"} ${(selectedOrder==="latest" || selectedOrder==="oldest") && keyword===""?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest"); setKeyword(""); setSelectedTag("");}}>All</button>
+                                    <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="latest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("latest"); setSelectedTag("");}}>Latest</button>
+                                    <button className={`chip${theme==="light"?"-light":"-dark"} ${selectedOrder==="oldest"?"chip-active":""}`} onClick={()=>{setSelectedOrder("oldest"); setSelectedTag("");}}>Oldest</button>
                                     
                                     {   
                                         uniqueTags.length !== 0?                 
                                             uniqueTags.map((tag, index) => {
-                                                return <ChipTags key={index} tag={tag}/> 
+                                                return <ChipTags key={index} tag={tag} selectedTag={selectedTag} handleSelectTag={() => handleSelectTag(tag)}/> 
                                             })
                                         :
                                             <></>
@@ -277,14 +288,19 @@ export default function Note() {
                     <>
                         <div className="notes-collection">
                             {   
-                                selectedOrder==="latest"?
-                                    (keyword===""?latestNote:selectedOrder==="latest"?latestfilterednotes:oldestfilterednotes).map((note)=>{
+                                selectedTag!==""?
+                                   (filteredNotes).map((note)=>{
                                         return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
                                     })
-                                    :
-                                    (keyword===""?oldestNote:selectedOrder==="oldest"?oldestfilterednotes:latestfilterednotes).map((note)=>{
-                                        return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
-                                    })
+                                : 
+                                    selectedOrder==="latest"?
+                                        (keyword===""?latestNote:latestfilterednotes).map((note)=>{
+                                            return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
+                                        })
+                                        :
+                                        (keyword===""?oldestNote:oldestfilterednotes).map((note)=>{
+                                            return <NoteItem key={note._id} note={note} OpenNoteDetailModal={() => OpenNoteDetailModal(note)}/>
+                                        })
                             }
                         </div>
                         <div>

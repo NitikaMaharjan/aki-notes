@@ -9,7 +9,7 @@ export default function ChipTags(props) {
 
   return (
     <>
-        <button className={`chip${theme==="light"?"-light":"-dark"}`}>{handleCapitalizeFirstLetter(props.tag)}</button>
+        <button className={`chip${theme==="light"?"-light":"-dark"} ${props.selectedTag===props.tag?"chip-active":""}`} onClick={props.handleSelectTag}>{handleCapitalizeFirstLetter(props.tag)}</button>
     </>
   )
 }
